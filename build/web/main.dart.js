@@ -9,6 +9,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   const _interceptors = dart_sdk._interceptors;
   const js = dart_sdk.js;
   const ui = dart_sdk.ui;
+  const _internal = dart_sdk._internal;
   const _js_helper = dart_sdk._js_helper;
   const dart = dart_sdk.dart;
   const dartx = dart_sdk.dartx;
@@ -60,12 +61,15 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   const icon$ = flutter_sdk.src__widgets__icon;
   const icon_data = flutter_sdk.src__widgets__icon_data;
   const gesture_detector = flutter_sdk.src__widgets__gesture_detector;
+  const drag_target = flutter_sdk.src__widgets__drag_target;
   const divider = flutter_sdk.src__material__divider;
   const text_field = flutter_sdk.src__material__text_field;
   const input_decorator = flutter_sdk.src__material__input_decorator;
   const input_border = flutter_sdk.src__material__input_border;
   const alignment = flutter_sdk.src__painting__alignment;
   const text_input = flutter_sdk.src__services__text_input;
+  const scroll_view = flutter_sdk.src__widgets__scroll_view;
+  const basic_types = flutter_sdk.src__painting__basic_types;
   const icon_button = flutter_sdk.src__material__icon_button;
   var $46zapp_entry = Object.create(dart.library);
   var main = Object.create(dart.library);
@@ -79,32 +83,43 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   var tag_sidebar = Object.create(dart.library);
   var bottom_action_bar = Object.create(dart.library);
   var note_service = Object.create(dart.library);
+  var tag_service = Object.create(dart.library);
   var note$ = Object.create(dart.library);
+  var tag$ = Object.create(dart.library);
   var category_button = Object.create(dart.library);
   var size_selector = Object.create(dart.library);
   var note_input_area = Object.create(dart.library);
-  var tag = Object.create(dart.library);
-  var tag_item = Object.create(dart.library);
+  var editable_tag_item = Object.create(dart.library);
+  var tag_list = Object.create(dart.library);
   var action_button = Object.create(dart.library);
+  var text_utils = Object.create(dart.library);
+  var tag_chip = Object.create(dart.library);
   var $toString = dartx.toString;
+  var $isNotEmpty = dartx.isNotEmpty;
+  var $length = dartx.length;
+  var $_get = dartx._get;
+  var $firstWhere = dartx.firstWhere;
+  var $_set = dartx._set;
   var $contains = dartx.contains;
   var $add = dartx.add;
   var $remove = dartx.remove;
+  var $removeWhere = dartx.removeWhere;
   var $isEmpty = dartx.isEmpty;
   var $clear = dartx.clear;
-  var $length = dartx.length;
   var $isEven = dartx.isEven;
   var $truncate = dartx.truncate;
-  var $_get = dartx._get;
   var $where = dartx.where;
   var $toList = dartx.toList;
-  var $firstWhere = dartx.firstWhere;
   var $indexWhere = dartx.indexWhere;
-  var $_set = dartx._set;
   var $removeAt = dartx.removeAt;
+  var $addAll = dartx.addAll;
+  var $toLowerCase = dartx.toLowerCase;
+  var $any = dartx.any;
   var $runtimeType = dartx.runtimeType;
   var $hashCode = dartx.hashCode;
-  var $addAll = dartx.addAll;
+  var $trim = dartx.trim;
+  var $map = dartx.map;
+  var $substring = dartx.substring;
   dart._checkModuleNullSafetyMode(true);
   dart._checkModuleRuntimeTypes(false);
   var T = {
@@ -117,6 +132,11 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     ObjectAndStackTraceTovoid: () => (T.ObjectAndStackTraceTovoid = dart.constFn(dart.fnType(dart.void, [core.Object, core.StackTrace])))(),
     ZoneAndZoneDelegateAndZone__Tovoid: () => (T.ZoneAndZoneDelegateAndZone__Tovoid = dart.constFn(dart.fnType(dart.void, [async.Zone, async.ZoneDelegate, async.Zone, core.String])))(),
     FlutterErrorDetailsTovoid: () => (T.FlutterErrorDetailsTovoid = dart.constFn(dart.fnType(dart.void, [assertions.FlutterErrorDetails])))(),
+    JSArrayOfTagData: () => (T.JSArrayOfTagData = dart.constFn(_interceptors.JSArray$(tag$.TagData)))(),
+    TagDataTobool: () => (T.TagDataTobool = dart.constFn(dart.fnType(core.bool, [tag$.TagData])))(),
+    VoidToTagData: () => (T.VoidToTagData = dart.constFn(dart.fnType(tag$.TagData, [])))(),
+    ListOfTagData: () => (T.ListOfTagData = dart.constFn(core.List$(tag$.TagData)))(),
+    ListOfTagDataTovoid: () => (T.ListOfTagDataTovoid = dart.constFn(dart.fnType(dart.void, [T.ListOfTagData()])))(),
     JSArrayOfWidget: () => (T.JSArrayOfWidget = dart.constFn(_interceptors.JSArray$(framework.Widget)))(),
     BuildContextAndBoxConstraintsToColumn: () => (T.BuildContextAndBoxConstraintsToColumn = dart.constFn(dart.fnType(basic.Column, [framework.BuildContext, box.BoxConstraints])))(),
     NoteToNull: () => (T.NoteToNull = dart.constFn(dart.fnType(core.Null, [note$.Note])))(),
@@ -124,17 +144,28 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     BuildContextToAlertDialog: () => (T.BuildContextToAlertDialog = dart.constFn(dart.fnType(dialog.AlertDialog, [framework.BuildContext])))(),
     JSArrayOfBoxShadow: () => (T.JSArrayOfBoxShadow = dart.constFn(_interceptors.JSArray$(box_shadow.BoxShadow)))(),
     BuildContextAndBoxConstraintsToContainer: () => (T.BuildContextAndBoxConstraintsToContainer = dart.constFn(dart.fnType(container.Container, [framework.BuildContext, box.BoxConstraints])))(),
-    JSArrayOfTagData: () => (T.JSArrayOfTagData = dart.constFn(_interceptors.JSArray$(tag.TagData)))(),
     ListOfWidget: () => (T.ListOfWidget = dart.constFn(core.List$(framework.Widget)))(),
+    StringTovoid: () => (T.StringTovoid = dart.constFn(dart.fnType(dart.void, [core.String])))(),
     intToWidget: () => (T.intToWidget = dart.constFn(dart.fnType(framework.Widget, [core.int])))(),
+    TagDataN: () => (T.TagDataN = dart.constFn(dart.nullable(tag$.TagData)))(),
+    TagDataNToNull: () => (T.TagDataNToNull = dart.constFn(dart.fnType(core.Null, [T.TagDataN()])))(),
     JSArrayOfNote: () => (T.JSArrayOfNote = dart.constFn(_interceptors.JSArray$(note$.Note)))(),
     ListOfNote: () => (T.ListOfNote = dart.constFn(core.List$(note$.Note)))(),
     StreamControllerOfListOfNote: () => (T.StreamControllerOfListOfNote = dart.constFn(async.StreamController$(T.ListOfNote())))(),
     NoteTobool: () => (T.NoteTobool = dart.constFn(dart.fnType(core.bool, [note$.Note])))(),
     NoteN: () => (T.NoteN = dart.constFn(dart.nullable(note$.Note)))(),
+    StreamControllerOfListOfTagData: () => (T.StreamControllerOfListOfTagData = dart.constFn(async.StreamController$(T.ListOfTagData())))(),
     MapOfString$dynamic: () => (T.MapOfString$dynamic = dart.constFn(core.Map$(core.String, dart.dynamic)))(),
     MapNOfString$dynamic: () => (T.MapNOfString$dynamic = dart.constFn(dart.nullable(T.MapOfString$dynamic())))(),
-    IdentityMapOfString$dynamic: () => (T.IdentityMapOfString$dynamic = dart.constFn(_js_helper.IdentityMap$(core.String, dart.dynamic)))()
+    IdentityMapOfString$dynamic: () => (T.IdentityMapOfString$dynamic = dart.constFn(_js_helper.IdentityMap$(core.String, dart.dynamic)))(),
+    DragTargetOfTagData: () => (T.DragTargetOfTagData = dart.constFn(drag_target.DragTarget$(tag$.TagData)))(),
+    TagDataTovoid: () => (T.TagDataTovoid = dart.constFn(dart.fnType(dart.void, [tag$.TagData])))(),
+    TagDataNTobool: () => (T.TagDataNTobool = dart.constFn(dart.fnType(core.bool, [T.TagDataN()])))(),
+    ListOfTagDataN: () => (T.ListOfTagDataN = dart.constFn(core.List$(T.TagDataN())))(),
+    BuildContextAndListOfTagDataNAndListToContainer: () => (T.BuildContextAndListOfTagDataNAndListToContainer = dart.constFn(dart.fnType(container.Container, [framework.BuildContext, T.ListOfTagDataN(), core.List])))(),
+    FutureOfvoid: () => (T.FutureOfvoid = dart.constFn(async.Future$(dart.void)))(),
+    DraggableOfTagData: () => (T.DraggableOfTagData = dart.constFn(drag_target.Draggable$(tag$.TagData)))(),
+    TagDataToTagChip: () => (T.TagDataToTagChip = dart.constFn(dart.fnType(tag_chip.TagChip, [tag$.TagData])))()
   };
   const CT = Object.create({
     _: () => (C, CT)
@@ -672,7 +703,10 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       });
     },
     get C35() {
-      return C[35] = dart.const({
+      return C[35] = dart.constList([], tag$.TagData);
+    },
+    get C36() {
+      return C[36] = dart.const({
         __proto__: basic.SizedBox.prototype,
         [Widget_key]: null,
         [SingleChildRenderObjectWidget_child]: null,
@@ -680,62 +714,62 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
         [SizedBox_width]: null
       });
     },
-    get C36() {
-      return C[36] = dart.const({
+    get C37() {
+      return C[37] = dart.const({
         __proto__: core.Duration.prototype,
         [Duration__duration]: 250000
       });
     },
-    get C37() {
-      return C[37] = dart.const({
+    get C38() {
+      return C[38] = dart.const({
         __proto__: ui.Offset.prototype,
         [OffsetBase__dy]: 2,
         [OffsetBase__dx]: 0
       });
     },
-    get C38() {
-      return C[38] = dart.const({
+    get C39() {
+      return C[39] = dart.const({
         __proto__: ui.Color.prototype,
         [Color_value]: 4280953386
       });
     },
-    get C41() {
-      return C[41] = dart.const({
+    get C42() {
+      return C[42] = dart.const({
         __proto__: borders.BorderStyle.prototype,
         [_Enum__name]: "none",
         [_Enum_index]: 0
       });
     },
-    get C42() {
-      return C[42] = dart.const({
+    get C43() {
+      return C[43] = dart.const({
         __proto__: ui.Color.prototype,
         [Color_value]: 4278190080
       });
     },
-    get C40() {
-      return C[40] = dart.const({
+    get C41() {
+      return C[41] = dart.const({
         __proto__: borders.BorderSide.prototype,
         [BorderSide_strokeAlign]: -1,
-        [BorderSide_style]: C[41] || CT.C41,
+        [BorderSide_style]: C[42] || CT.C42,
         [BorderSide_width]: 0,
-        [BorderSide_color]: C[42] || CT.C42
+        [BorderSide_color]: C[43] || CT.C43
       });
     },
-    get C39() {
-      return C[39] = dart.const({
+    get C40() {
+      return C[40] = dart.const({
         __proto__: circle_border.CircleBorder.prototype,
-        [OutlinedBorder_side]: C[40] || CT.C40,
+        [OutlinedBorder_side]: C[41] || CT.C41,
         [CircleBorder_eccentricity]: 0
       });
     },
-    get C43() {
-      return C[43] = dart.constList([], core.String);
-    },
     get C44() {
-      return C[44] = dart.constList(["Large", "Medium", "Small"], core.String);
+      return C[44] = dart.constList([], core.String);
     },
     get C45() {
-      return C[45] = dart.const({
+      return C[45] = dart.constList(["Large", "Medium", "Small"], core.String);
+    },
+    get C46() {
+      return C[46] = dart.const({
         __proto__: basic.SizedBox.prototype,
         [Widget_key]: null,
         [SingleChildRenderObjectWidget_child]: null,
@@ -743,8 +777,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
         [SizedBox_width]: 2
       });
     },
-    get C46() {
-      return C[46] = dart.const({
+    get C47() {
+      return C[47] = dart.const({
         __proto__: edge_insets.EdgeInsets.prototype,
         [EdgeInsets_bottom]: 8,
         [EdgeInsets_right]: 12,
@@ -752,8 +786,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
         [EdgeInsets_left]: 12
       });
     },
-    get C47() {
-      return C[47] = dart.const({
+    get C48() {
+      return C[48] = dart.const({
         __proto__: edge_insets.EdgeInsets.prototype,
         [EdgeInsets_bottom]: 12,
         [EdgeInsets_right]: 16,
@@ -761,8 +795,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
         [EdgeInsets_left]: 16
       });
     },
-    get C48() {
-      return C[48] = dart.const({
+    get C49() {
+      return C[49] = dart.const({
         __proto__: edge_insets.EdgeInsets.prototype,
         [EdgeInsets_bottom]: 0,
         [EdgeInsets_right]: 4,
@@ -770,21 +804,63 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
         [EdgeInsets_left]: 4
       });
     },
-    get C49() {
-      return C[49] = dart.const({
+    get C50() {
+      return C[50] = dart.const({
+        __proto__: ui.Color.prototype,
+        [Color_value]: 4279902256
+      });
+    },
+    get C51() {
+      return C[51] = dart.const({
         __proto__: ui.Color.prototype,
         [Color_value]: 4280163870
       });
     },
-    get C50() {
-      return C[50] = dart.const({
+    get C52() {
+      return C[52] = dart.const({
+        __proto__: edge_insets.EdgeInsets.prototype,
+        [EdgeInsets_bottom]: 8,
+        [EdgeInsets_right]: 0,
+        [EdgeInsets_top]: 0,
+        [EdgeInsets_left]: 12
+      });
+    },
+    get C53() {
+      return C[53] = dart.const({
         __proto__: spacer.Spacer.prototype,
         [Widget_key]: null,
         [Spacer_flex]: 2
       });
+    },
+    get C54() {
+      return C[54] = dart.const({
+        __proto__: edge_insets.EdgeInsets.prototype,
+        [EdgeInsets_bottom]: 2,
+        [EdgeInsets_right]: 0,
+        [EdgeInsets_top]: 0,
+        [EdgeInsets_left]: 0
+      });
+    },
+    get C55() {
+      return C[55] = dart.const({
+        __proto__: basic.SizedBox.prototype,
+        [Widget_key]: null,
+        [SingleChildRenderObjectWidget_child]: null,
+        [SizedBox_height]: 0,
+        [SizedBox_width]: 0
+      });
+    },
+    get C56() {
+      return C[56] = dart.const({
+        __proto__: edge_insets.EdgeInsets.prototype,
+        [EdgeInsets_bottom]: 6,
+        [EdgeInsets_right]: 6,
+        [EdgeInsets_top]: 0,
+        [EdgeInsets_left]: 0
+      });
     }
   }, false);
-  var C = Array(51).fill(void 0);
+  var C = Array(57).fill(void 0);
   var I = [
     "file:///zapp/project/lib/app.dart",
     "file:///zapp/project/lib/screens/note_entry_screen.dart",
@@ -795,13 +871,17 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     "file:///zapp/project/lib/widgets/tag/tag_sidebar.dart",
     "file:///zapp/project/lib/widgets/bottom_bar/bottom_action_bar.dart",
     "file:///zapp/project/lib/services/note_service.dart",
+    "file:///zapp/project/lib/services/tag_service.dart",
     "file:///zapp/project/lib/models/note.dart",
+    "file:///zapp/project/lib/models/tag.dart",
     "file:///zapp/project/lib/widgets/category/category_button.dart",
     "file:///zapp/project/lib/widgets/note/size_selector.dart",
     "file:///zapp/project/lib/widgets/note/note_input_area.dart",
-    "file:///zapp/project/lib/models/tag.dart",
-    "file:///zapp/project/lib/widgets/tag/tag_item.dart",
-    "file:///zapp/project/lib/widgets/note/action_button.dart"
+    "file:///zapp/project/lib/widgets/tag/editable_tag_item.dart",
+    "file:///zapp/project/lib/widgets/tag/tag_list.dart",
+    "file:///zapp/project/lib/widgets/note/action_button.dart",
+    "file:///zapp/project/lib/utils/text_utils.dart",
+    "file:///zapp/project/lib/widgets/tag/tag_chip.dart"
   ];
   $46zapp_entry.runAppGuarded = function runAppGuarded() {
     async.runZonedGuarded(core.Null, dart.fn(() => {
@@ -889,11 +969,15 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   var _selectedCategory = dart.privateName(note_entry_screen, "_selectedCategory");
   var _selectedSize = dart.privateName(note_entry_screen, "_selectedSize");
   var _selectedTagIds = dart.privateName(note_entry_screen, "_selectedTagIds");
+  var _appliedTags = dart.privateName(note_entry_screen, "_appliedTags");
   var _noteService = dart.privateName(note_entry_screen, "_noteService");
+  var _tagService = dart.privateName(note_entry_screen, "_tagService");
   var _noteController = dart.privateName(note_entry_screen, "_noteController");
   var _noteFocusNode = dart.privateName(note_entry_screen, "_noteFocusNode");
   var _selectCategory = dart.privateName(note_entry_screen, "_selectCategory");
   var _selectSize = dart.privateName(note_entry_screen, "_selectSize");
+  var _handleTagAdded = dart.privateName(note_entry_screen, "_handleTagAdded");
+  var _handleTagRemoved = dart.privateName(note_entry_screen, "_handleTagRemoved");
   var _handleDeleteNote = dart.privateName(note_entry_screen, "_handleDeleteNote");
   var _handleUndoNote = dart.privateName(note_entry_screen, "_handleUndoNote");
   var _handleFormatNote = dart.privateName(note_entry_screen, "_handleFormatNote");
@@ -904,6 +988,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   var _handleSettingsPressed = dart.privateName(note_entry_screen, "_handleSettingsPressed");
   var _handleExplorePressed = dart.privateName(note_entry_screen, "_handleExplorePressed");
   var _handleProfilePressed = dart.privateName(note_entry_screen, "_handleProfilePressed");
+  var _findTagById = dart.privateName(note_entry_screen, "_findTagById");
   var _saveCurrentNote = dart.privateName(note_entry_screen, "_saveCurrentNote");
   var _Enum__name = dart.privateName(core, "_Enum._name");
   var _Enum_index = dart.privateName(core, "_Enum.index");
@@ -942,6 +1027,19 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   note_entry_screen._NoteEntryScreenState = class _NoteEntryScreenState extends framework.State$(note_entry_screen.NoteEntryScreen) {
     initState() {
       super.initState();
+      this[_tagService].tagsStream.listen(dart.fn(updatedTags => {
+        if (this[_appliedTags][$isNotEmpty]) {
+          this.setState(dart.fn(() => {
+            for (let i = 0; i < this[_appliedTags][$length]; i = i + 1) {
+              let currentTag = this[_appliedTags][$_get](i);
+              let updatedTag = updatedTags[$firstWhere](dart.fn(tag => tag.id === currentTag.id, T.TagDataTobool()), {orElse: dart.fn(() => currentTag, T.VoidToTagData())});
+              if (updatedTag.label !== currentTag.label) {
+                this[_appliedTags][$_set](i, updatedTag);
+              }
+            }
+          }, T.VoidTovoid()));
+        }
+      }, T.ListOfTagDataTovoid()));
     }
     dispose() {
       this[_noteController].dispose();
@@ -951,7 +1049,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     build(context) {
       let isCompact = media_query.MediaQuery.of(context).size.width < 768;
       let spacing = layout.AppLayout.getSpacing(context);
-      return new scaffold.Scaffold.new({body: new safe_area.SafeArea.new({child: new layout_builder.LayoutBuilder.new({builder: dart.fn((context, constraints) => new basic.Column.new({children: T.JSArrayOfWidget().of([new basic.Expanded.new({child: new basic.Row.new({crossAxisAlignment: flex.CrossAxisAlignment.start, children: T.JSArrayOfWidget().of([new basic.SizedBox.new({width: spacing}), new category_sidebar.CategorySidebar.new({selectedCategory: this[_selectedCategory], onCategorySelected: dart.bind(this, _selectCategory), screenHeight: constraints.maxHeight, isCompact: isCompact}), new basic.SizedBox.new({width: spacing}), new basic.Expanded.new({flex: 8, child: new note_content.NoteContent.new({selectedSize: this[_selectedSize], onSizeSelected: dart.bind(this, _selectSize), noteController: this[_noteController], focusNode: this[_noteFocusNode], onDelete: dart.bind(this, _handleDeleteNote), onUndo: dart.bind(this, _handleUndoNote), onFormat: dart.bind(this, _handleFormatNote), onCamera: dart.bind(this, _handleCameraPressed), onMic: dart.bind(this, _handleMicPressed), onLink: dart.bind(this, _handleLinkPressed)})}), new basic.SizedBox.new({width: spacing}), new tag_sidebar.TagSidebar.new({screenHeight: constraints.maxHeight, isCompact: isCompact, onTagSelected: dart.bind(this, _handleTagSelected)}), new basic.SizedBox.new({width: spacing})])})}), new bottom_action_bar.BottomActionBar.new({onSettingsPressed: dart.bind(this, _handleSettingsPressed), onExplorePressed: dart.bind(this, _handleExplorePressed), onProfilePressed: dart.bind(this, _handleProfilePressed), isCompact: isCompact})])}), T.BuildContextAndBoxConstraintsToColumn())})})});
+      return new scaffold.Scaffold.new({body: new safe_area.SafeArea.new({child: new layout_builder.LayoutBuilder.new({builder: dart.fn((context, constraints) => new basic.Column.new({children: T.JSArrayOfWidget().of([new basic.Expanded.new({child: new basic.Row.new({crossAxisAlignment: flex.CrossAxisAlignment.start, children: T.JSArrayOfWidget().of([new basic.SizedBox.new({width: spacing}), new category_sidebar.CategorySidebar.new({selectedCategory: this[_selectedCategory], onCategorySelected: dart.bind(this, _selectCategory), screenHeight: constraints.maxHeight, isCompact: isCompact}), new basic.SizedBox.new({width: spacing}), new basic.Expanded.new({flex: 8, child: new note_content.NoteContent.new({selectedSize: this[_selectedSize], onSizeSelected: dart.bind(this, _selectSize), noteController: this[_noteController], focusNode: this[_noteFocusNode], appliedTags: this[_appliedTags], onTagAdded: dart.bind(this, _handleTagAdded), onTagRemoved: dart.bind(this, _handleTagRemoved), onDelete: dart.bind(this, _handleDeleteNote), onUndo: dart.bind(this, _handleUndoNote), onFormat: dart.bind(this, _handleFormatNote), onCamera: dart.bind(this, _handleCameraPressed), onMic: dart.bind(this, _handleMicPressed), onLink: dart.bind(this, _handleLinkPressed)})}), new basic.SizedBox.new({width: spacing}), new tag_sidebar.TagSidebar.new({screenHeight: constraints.maxHeight, isCompact: isCompact, onTagSelected: dart.bind(this, _handleTagSelected)}), new basic.SizedBox.new({width: spacing})])})}), new bottom_action_bar.BottomActionBar.new({onSettingsPressed: dart.bind(this, _handleSettingsPressed), onExplorePressed: dart.bind(this, _handleExplorePressed), onProfilePressed: dart.bind(this, _handleProfilePressed), isCompact: isCompact})])}), T.BuildContextAndBoxConstraintsToColumn())})})});
     }
     [_selectCategory](category) {
       this.setState(dart.fn(() => {
@@ -975,6 +1073,26 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       }, T.VoidTovoid()));
       print.debugPrint("Selected tags: " + dart.str(this[_selectedTagIds]));
     }
+    [_handleTagAdded](tag) {
+      this.setState(dart.fn(() => {
+        if (!this[_appliedTags][$contains](tag)) {
+          this[_appliedTags][$add](tag);
+          if (!this[_selectedTagIds][$contains](tag.id)) {
+            this[_selectedTagIds][$add](tag.id);
+          }
+        }
+      }, T.VoidTovoid()));
+      print.debugPrint("Tag added to note: " + tag.label);
+    }
+    [_findTagById](id) {
+      return this[_tagService].getTagById(id);
+    }
+    [_handleTagRemoved](tag) {
+      this.setState(dart.fn(() => {
+        this[_appliedTags][$removeWhere](dart.fn(t => t.id === tag.id, T.TagDataTobool()));
+      }, T.VoidTovoid()));
+      print.debugPrint("Tag removed from note: " + tag.label);
+    }
     [_handleSettingsPressed]() {
       print.debugPrint("Settings pressed");
     }
@@ -994,6 +1112,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
         this[_noteController].clear();
         this.setState(dart.fn(() => {
           this[_selectedTagIds][$clear]();
+          this[_appliedTags][$clear]();
         }, T.VoidTovoid()));
       }, T.NoteToNull()));
     }
@@ -1004,6 +1123,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
                 navigator.Navigator.of(context).pop(T.ObjectN());
                 this.setState(dart.fn(() => {
                   this[_selectedTagIds][$clear]();
+                  this[_appliedTags][$clear]();
                 }, T.VoidTovoid()));
               }, T.VoidTovoid()), child: C[11] || CT.C11})])}), T.BuildContextToAlertDialog())});
     }
@@ -1031,7 +1151,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     this[_selectedCategory] = "Private";
     this[_selectedSize] = "Medium";
     this[_selectedTagIds] = T.JSArrayOfString().of([]);
+    this[_appliedTags] = T.JSArrayOfTagData().of([]);
     this[_noteService] = note_service.NoteService.new();
+    this[_tagService] = tag_service.TagService.new();
     this[_noteController] = new editable_text.TextEditingController.new();
     this[_noteFocusNode] = new focus_manager.FocusNode.new();
     note_entry_screen._NoteEntryScreenState.__proto__.new.call(this);
@@ -1045,6 +1167,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     [_selectCategory]: dart.fnType(dart.void, [core.String]),
     [_selectSize]: dart.fnType(dart.void, [core.String]),
     [_handleTagSelected]: dart.fnType(dart.void, [core.String, core.bool]),
+    [_handleTagAdded]: dart.fnType(dart.void, [tag$.TagData]),
+    [_findTagById]: dart.fnType(dart.nullable(tag$.TagData), [core.String]),
+    [_handleTagRemoved]: dart.fnType(dart.void, [tag$.TagData]),
     [_handleSettingsPressed]: dart.fnType(dart.void, []),
     [_handleExplorePressed]: dart.fnType(dart.void, []),
     [_handleProfilePressed]: dart.fnType(dart.void, []),
@@ -1062,7 +1187,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     [_selectedCategory]: dart.fieldType(core.String),
     [_selectedSize]: dart.fieldType(core.String),
     [_selectedTagIds]: dart.finalFieldType(core.List$(core.String)),
+    [_appliedTags]: dart.finalFieldType(core.List$(tag$.TagData)),
     [_noteService]: dart.finalFieldType(note_service.NoteService),
+    [_tagService]: dart.finalFieldType(tag_service.TagService),
     [_noteController]: dart.finalFieldType(editable_text.TextEditingController),
     [_noteFocusNode]: dart.finalFieldType(focus_manager.FocusNode)
   }));
@@ -1370,6 +1497,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   var onSizeSelected$ = dart.privateName(note_content, "NoteContent.onSizeSelected");
   var noteController$ = dart.privateName(note_content, "NoteContent.noteController");
   var focusNode$ = dart.privateName(note_content, "NoteContent.focusNode");
+  var appliedTags$ = dart.privateName(note_content, "NoteContent.appliedTags");
+  var onTagAdded$ = dart.privateName(note_content, "NoteContent.onTagAdded");
+  var onTagRemoved$ = dart.privateName(note_content, "NoteContent.onTagRemoved");
   var onDelete$ = dart.privateName(note_content, "NoteContent.onDelete");
   var onUndo$ = dart.privateName(note_content, "NoteContent.onUndo");
   var onFormat$ = dart.privateName(note_content, "NoteContent.onFormat");
@@ -1403,6 +1533,24 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     }
     set focusNode(value) {
       super.focusNode = value;
+    }
+    get appliedTags() {
+      return this[appliedTags$];
+    }
+    set appliedTags(value) {
+      super.appliedTags = value;
+    }
+    get onTagAdded() {
+      return this[onTagAdded$];
+    }
+    set onTagAdded(value) {
+      super.onTagAdded = value;
+    }
+    get onTagRemoved() {
+      return this[onTagRemoved$];
+    }
+    set onTagRemoved(value) {
+      super.onTagRemoved = value;
     }
     get onDelete() {
       return this[onDelete$];
@@ -1446,16 +1594,19 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let onSizeSelected = opts && 'onSizeSelected' in opts ? opts.onSizeSelected : null;
       let noteController = opts && 'noteController' in opts ? opts.noteController : null;
       let focusNode = opts && 'focusNode' in opts ? opts.focusNode : null;
+      let appliedTags = opts && 'appliedTags' in opts ? opts.appliedTags : C[35] || CT.C35;
+      let onTagAdded = opts && 'onTagAdded' in opts ? opts.onTagAdded : null;
+      let onTagRemoved = opts && 'onTagRemoved' in opts ? opts.onTagRemoved : null;
       let onDelete = opts && 'onDelete' in opts ? opts.onDelete : null;
       let onUndo = opts && 'onUndo' in opts ? opts.onUndo : null;
       let onFormat = opts && 'onFormat' in opts ? opts.onFormat : null;
       let onCamera = opts && 'onCamera' in opts ? opts.onCamera : null;
       let onMic = opts && 'onMic' in opts ? opts.onMic : null;
       let onLink = opts && 'onLink' in opts ? opts.onLink : null;
-      return new note_content.NoteContent.new({key: key, selectedSize: selectedSize, onSizeSelected: onSizeSelected, noteController: noteController, focusNode: focusNode, onDelete: onDelete, onUndo: onUndo, onFormat: onFormat, onCamera: onCamera, onMic: onMic, onLink: onLink});
+      return new note_content.NoteContent.new({key: key, selectedSize: selectedSize, onSizeSelected: onSizeSelected, noteController: noteController, focusNode: focusNode, appliedTags: appliedTags, onTagAdded: onTagAdded, onTagRemoved: onTagRemoved, onDelete: onDelete, onUndo: onUndo, onFormat: onFormat, onCamera: onCamera, onMic: onMic, onLink: onLink});
     }
     build(context) {
-      return new basic.Column.new({children: T.JSArrayOfWidget().of([new size_selector.SizeSelector.new({selectedSize: this.selectedSize, onSizeSelected: this.onSizeSelected}), C[35] || CT.C35, new basic.Expanded.new({child: new note_input_area.NoteInputArea.new({controller: this.noteController, focusNode: this.focusNode, onDelete: this.onDelete, onUndo: this.onUndo, onFormat: this.onFormat, onCamera: this.onCamera, onMic: this.onMic, onLink: this.onLink})}), C[35] || CT.C35])});
+      return new basic.Column.new({children: T.JSArrayOfWidget().of([new size_selector.SizeSelector.new({selectedSize: this.selectedSize, onSizeSelected: this.onSizeSelected}), C[36] || CT.C36, new basic.Expanded.new({child: new note_input_area.NoteInputArea.new({controller: this.noteController, focusNode: this.focusNode, appliedTags: this.appliedTags, onTagAdded: this.onTagAdded, onTagRemoved: this.onTagRemoved, onDelete: this.onDelete, onUndo: this.onUndo, onFormat: this.onFormat, onCamera: this.onCamera, onMic: this.onMic, onLink: this.onLink})}), C[36] || CT.C36])});
     }
   };
   (note_content.NoteContent.new = function(opts) {
@@ -1464,6 +1615,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     let onSizeSelected = opts && 'onSizeSelected' in opts ? opts.onSizeSelected : null;
     let noteController = opts && 'noteController' in opts ? opts.noteController : null;
     let focusNode = opts && 'focusNode' in opts ? opts.focusNode : null;
+    let appliedTags = opts && 'appliedTags' in opts ? opts.appliedTags : C[35] || CT.C35;
+    let onTagAdded = opts && 'onTagAdded' in opts ? opts.onTagAdded : null;
+    let onTagRemoved = opts && 'onTagRemoved' in opts ? opts.onTagRemoved : null;
     let onDelete = opts && 'onDelete' in opts ? opts.onDelete : null;
     let onUndo = opts && 'onUndo' in opts ? opts.onUndo : null;
     let onFormat = opts && 'onFormat' in opts ? opts.onFormat : null;
@@ -1474,6 +1628,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     this[onSizeSelected$] = onSizeSelected;
     this[noteController$] = noteController;
     this[focusNode$] = focusNode;
+    this[appliedTags$] = appliedTags;
+    this[onTagAdded$] = onTagAdded;
+    this[onTagRemoved$] = onTagRemoved;
     this[onDelete$] = onDelete;
     this[onUndo$] = onUndo;
     this[onFormat$] = onFormat;
@@ -1496,6 +1653,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     onSizeSelected: dart.finalFieldType(dart.fnType(dart.dynamic, [core.String])),
     noteController: dart.finalFieldType(editable_text.TextEditingController),
     focusNode: dart.finalFieldType(dart.nullable(focus_manager.FocusNode)),
+    appliedTags: dart.finalFieldType(core.List$(tag$.TagData)),
+    onTagAdded: dart.finalFieldType(dart.nullable(dart.fnType(dart.dynamic, [tag$.TagData]))),
+    onTagRemoved: dart.finalFieldType(dart.nullable(dart.fnType(dart.dynamic, [tag$.TagData]))),
     onDelete: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
     onUndo: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
     onFormat: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
@@ -1506,8 +1666,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   var screenHeight$0 = dart.privateName(tag_sidebar, "TagSidebar.screenHeight");
   var isCompact$0 = dart.privateName(tag_sidebar, "TagSidebar.isCompact");
   var onTagSelected$ = dart.privateName(tag_sidebar, "TagSidebar.onTagSelected");
-  var _handleTagTap = dart.privateName(tag_sidebar, "_handleTagTap");
-  tag_sidebar.TagSidebar = class TagSidebar extends framework.StatelessWidget {
+  tag_sidebar.TagSidebar = class TagSidebar extends framework.StatefulWidget {
     get screenHeight() {
       return this[screenHeight$0];
     }
@@ -1533,31 +1692,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let onTagSelected = opts && 'onTagSelected' in opts ? opts.onTagSelected : null;
       return new tag_sidebar.TagSidebar.new({key: key, screenHeight: screenHeight, isCompact: isCompact, onTagSelected: onTagSelected});
     }
-    build(context) {
-      let topOffset = 8 + 36 + 8;
-      let bottomOffset = 8;
-      let sidebarWidth = layout.AppLayout.getSidebarWidth(context, {isCompact: this.isCompact});
-      let tags = T.JSArrayOfTagData().of([new tag.TagData.new({id: "1", label: "Work"}), new tag.TagData.new({id: "2", label: "Ideas"}), new tag.TagData.new({id: "3", label: "Tasks"}), new tag.TagData.new({id: "4", label: "Personal"}), new tag.TagData.new({id: "5", label: "Travel"})]);
-      return new container.Container.new({width: sidebarWidth, margin: new edge_insets.EdgeInsets.only({right: this.isCompact ? 8 * 0.5 : 8}), child: new layout_builder.LayoutBuilder.new({builder: dart.fn((context, constraints) => {
-            let availableHeight = constraints.maxHeight - topOffset - bottomOffset;
-            let totalItems = tags[$length];
-            let totalSpacers = totalItems - 1;
-            let tagHeight = availableHeight / (totalItems + totalSpacers * 0.5);
-            let spacerHeight = tagHeight * 0.5;
-            return new container.Container.new({padding: new edge_insets.EdgeInsets.only({top: topOffset, bottom: bottomOffset}), child: new basic.Column.new({children: T.ListOfWidget().generate(totalItems * 2 - 1, dart.fn(index => {
-                  if (index[$isEven]) {
-                    let tagIndex = (index / 2)[$truncate]();
-                    return new tag_item.TagItem.new({height: tagHeight, tag: tags[$_get](tagIndex), onTap: dart.fn(() => this[_handleTagTap](tags[$_get](tagIndex)), T.VoidTovoid()), isCompact: this.isCompact});
-                  } else {
-                    return new basic.SizedBox.new({height: spacerHeight});
-                  }
-                }, T.intToWidget()))})});
-          }, T.BuildContextAndBoxConstraintsToContainer())})});
-    }
-    [_handleTagTap](tag) {
-      let t0;
-      t0 = this.onTagSelected;
-      t0 == null ? null : t0(tag.id, !tag.isSelected);
+    createState() {
+      return new tag_sidebar._TagSidebarState.new();
     }
   };
   (tag_sidebar.TagSidebar.new = function(opts) {
@@ -1575,8 +1711,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   dart.addTypeCaches(tag_sidebar.TagSidebar);
   dart.setMethodSignature(tag_sidebar.TagSidebar, () => ({
     __proto__: dart.getMethods(tag_sidebar.TagSidebar.__proto__),
-    build: dart.fnType(framework.Widget, [framework.BuildContext]),
-    [_handleTagTap]: dart.fnType(dart.void, [tag.TagData])
+    createState: dart.fnType(framework.State$(tag_sidebar.TagSidebar), [])
   }));
   dart.setLibraryUri(tag_sidebar.TagSidebar, I[6]);
   dart.setFieldSignature(tag_sidebar.TagSidebar, () => ({
@@ -1584,6 +1719,93 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     screenHeight: dart.finalFieldType(core.double),
     isCompact: dart.finalFieldType(core.bool),
     onTagSelected: dart.finalFieldType(dart.nullable(dart.fnType(dart.dynamic, [core.String, core.bool])))
+  }));
+  var _tagService$ = dart.privateName(tag_sidebar, "_tagService");
+  var ___TagSidebarState__tags = dart.privateName(tag_sidebar, "_#_TagSidebarState#_tags");
+  var _tags = dart.privateName(tag_sidebar, "_tags");
+  var _handleTagTap = dart.privateName(tag_sidebar, "_handleTagTap");
+  var _handleTagRename = dart.privateName(tag_sidebar, "_handleTagRename");
+  tag_sidebar._TagSidebarState = class _TagSidebarState extends framework.State$(tag_sidebar.TagSidebar) {
+    get [_tags]() {
+      let t0;
+      t0 = this[___TagSidebarState__tags];
+      return t0 == null ? dart.throw(new _internal.LateError.fieldNI("_tags")) : t0;
+    }
+    set [_tags](_tags$35param) {
+      this[___TagSidebarState__tags] = _tags$35param;
+    }
+    initState() {
+      super.initState();
+      this[_tags] = this[_tagService$].getAllTags();
+      this[_tagService$].tagsStream.listen(dart.fn(updatedTags => {
+        this.setState(dart.fn(() => {
+          this[_tags] = updatedTags;
+        }, T.VoidTovoid()));
+      }, T.ListOfTagDataTovoid()));
+    }
+    build(context) {
+      let topOffset = 8 + 36 + 8;
+      let bottomOffset = 8;
+      let sidebarWidth = layout.AppLayout.getSidebarWidth(context, {isCompact: this.widget.isCompact});
+      return new container.Container.new({width: sidebarWidth, margin: new edge_insets.EdgeInsets.only({right: this.widget.isCompact ? 8 * 0.5 : 8}), child: new layout_builder.LayoutBuilder.new({builder: dart.fn((context, constraints) => {
+            let availableHeight = constraints.maxHeight - topOffset - bottomOffset;
+            let totalItems = this[_tags][$length];
+            let totalSpacers = totalItems - 1;
+            let tagHeight = availableHeight / (totalItems + totalSpacers * 0.5);
+            let spacerHeight = tagHeight * 0.5;
+            return new container.Container.new({padding: new edge_insets.EdgeInsets.only({top: topOffset, bottom: bottomOffset}), child: new basic.Column.new({children: T.ListOfWidget().generate(totalItems * 2 - 1, dart.fn(index => {
+                  if (index[$isEven]) {
+                    let tagIndex = (index / 2)[$truncate]();
+                    return new editable_tag_item.EditableTagItem.new({height: tagHeight, tag: this[_tags][$_get](tagIndex), onTap: dart.fn(() => this[_handleTagTap](this[_tags][$_get](tagIndex)), T.VoidTovoid()), onRename: dart.fn(newLabel => this[_handleTagRename](this[_tags][$_get](tagIndex), newLabel), T.StringTovoid()), isCompact: this.widget.isCompact});
+                  } else {
+                    return new basic.SizedBox.new({height: spacerHeight});
+                  }
+                }, T.intToWidget()))})});
+          }, T.BuildContextAndBoxConstraintsToContainer())})});
+    }
+    [_handleTagTap](tag) {
+      let t0;
+      t0 = this.widget.onTagSelected;
+      t0 == null ? null : t0(tag.id, !tag.isSelected);
+    }
+    [_handleTagRename](tag, newLabel) {
+      this[_tagService$].updateTag(tag.id, newLabel).then(core.Null, dart.fn(updatedTag => {
+        if (updatedTag != null) {
+          print.debugPrint("Tag renamed: " + tag.label + " → " + newLabel);
+        }
+      }, T.TagDataNToNull()));
+    }
+    static ['_#new#tearOff']() {
+      return new tag_sidebar._TagSidebarState.new();
+    }
+  };
+  (tag_sidebar._TagSidebarState.new = function() {
+    this[_tagService$] = tag_service.TagService.new();
+    this[___TagSidebarState__tags] = null;
+    tag_sidebar._TagSidebarState.__proto__.new.call(this);
+    ;
+  }).prototype = tag_sidebar._TagSidebarState.prototype;
+  dart.addTypeTests(tag_sidebar._TagSidebarState);
+  dart.addTypeCaches(tag_sidebar._TagSidebarState);
+  dart.setMethodSignature(tag_sidebar._TagSidebarState, () => ({
+    __proto__: dart.getMethods(tag_sidebar._TagSidebarState.__proto__),
+    build: dart.fnType(framework.Widget, [framework.BuildContext]),
+    [_handleTagTap]: dart.fnType(dart.void, [tag$.TagData]),
+    [_handleTagRename]: dart.fnType(dart.void, [tag$.TagData, core.String])
+  }));
+  dart.setGetterSignature(tag_sidebar._TagSidebarState, () => ({
+    __proto__: dart.getGetters(tag_sidebar._TagSidebarState.__proto__),
+    [_tags]: core.List$(tag$.TagData)
+  }));
+  dart.setSetterSignature(tag_sidebar._TagSidebarState, () => ({
+    __proto__: dart.getSetters(tag_sidebar._TagSidebarState.__proto__),
+    [_tags]: core.List$(tag$.TagData)
+  }));
+  dart.setLibraryUri(tag_sidebar._TagSidebarState, I[6]);
+  dart.setFieldSignature(tag_sidebar._TagSidebarState, () => ({
+    __proto__: dart.getFields(tag_sidebar._TagSidebarState.__proto__),
+    [_tagService$]: dart.finalFieldType(tag_service.TagService),
+    [___TagSidebarState__tags]: dart.fieldType(dart.nullable(core.List$(tag$.TagData)))
   }));
   var onSettingsPressed$ = dart.privateName(bottom_action_bar, "BottomActionBar.onSettingsPressed");
   var onExplorePressed$ = dart.privateName(bottom_action_bar, "BottomActionBar.onExplorePressed");
@@ -1638,7 +1860,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let iconSize = layout.AppLayout.getIconSize(context, {baseSize: 26});
       let borderWidth = this.isCompact ? 1.5 : 2;
       let fontSize = layout.AppLayout.getFontSize(context, {baseSize: this.isCompact ? 15 : 16});
-      return new implicit_animations.AnimatedContainer.new({duration: C[36] || CT.C36, padding: new edge_insets.EdgeInsets.all(this.isCompact ? 8 * 0.7 : 8), child: new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.center, children: T.JSArrayOfWidget().of([this[_buildCircleButton]({context: context, icon: icons.Icons.settings, onTap: this.onSettingsPressed, tooltip: "Settings", buttonSize: buttonSize, sidebarWidth: sidebarWidth, sidePadding: sidePadding, iconSize: iconSize, borderWidth: borderWidth}), new basic.Expanded.new({child: new basic.Semantics.new({label: "Explore notes", button: true, child: new container.Container.new({height: actionBarHeight, decoration: new box_decoration.BoxDecoration.new({color: theme.colorScheme.primary, borderRadius: new border_radius.BorderRadius.circular(8), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.15), blurRadius: 4, offset: C[37] || CT.C37})])}), child: new material.Material.new({color: colors.Colors.transparent, borderRadius: new border_radius.BorderRadius.circular(8), child: new ink_well.InkWell.new({onTap: this.onExplorePressed, borderRadius: new border_radius.BorderRadius.circular(8), splashColor: colors.Colors.white.withOpacity(0.4), highlightColor: colors.Colors.white.withOpacity(0.2), child: new basic.Center.new({child: new text.Text.new("Explore", {style: new text_style.TextStyle.new({color: colors.Colors.white, fontSize: fontSize, fontWeight: ui.FontWeight.w500})})})})})})})}), this[_buildCircleButton]({context: context, icon: icons.Icons.person, onTap: this.onProfilePressed, tooltip: "Profile", buttonSize: buttonSize, sidebarWidth: sidebarWidth, sidePadding: sidePadding, iconSize: iconSize, borderWidth: borderWidth})])})});
+      return new implicit_animations.AnimatedContainer.new({duration: C[37] || CT.C37, padding: new edge_insets.EdgeInsets.all(this.isCompact ? 8 * 0.7 : 8), child: new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.center, children: T.JSArrayOfWidget().of([this[_buildCircleButton]({context: context, icon: icons.Icons.settings, onTap: this.onSettingsPressed, tooltip: "Settings", buttonSize: buttonSize, sidebarWidth: sidebarWidth, sidePadding: sidePadding, iconSize: iconSize, borderWidth: borderWidth}), new basic.Expanded.new({child: new basic.Semantics.new({label: "Explore notes", button: true, child: new container.Container.new({height: actionBarHeight, decoration: new box_decoration.BoxDecoration.new({color: theme.colorScheme.primary, borderRadius: new border_radius.BorderRadius.circular(8), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.15), blurRadius: 4, offset: C[38] || CT.C38})])}), child: new material.Material.new({color: colors.Colors.transparent, borderRadius: new border_radius.BorderRadius.circular(8), child: new ink_well.InkWell.new({onTap: this.onExplorePressed, borderRadius: new border_radius.BorderRadius.circular(8), splashColor: colors.Colors.white.withOpacity(0.4), highlightColor: colors.Colors.white.withOpacity(0.2), child: new basic.Center.new({child: new text.Text.new("Explore", {style: new text_style.TextStyle.new({color: colors.Colors.white, fontSize: fontSize, fontWeight: ui.FontWeight.w500})})})})})})})}), this[_buildCircleButton]({context: context, icon: icons.Icons.person, onTap: this.onProfilePressed, tooltip: "Profile", buttonSize: buttonSize, sidebarWidth: sidebarWidth, sidePadding: sidePadding, iconSize: iconSize, borderWidth: borderWidth})])})});
     }
     [_buildCircleButton](opts) {
       let context = opts && 'context' in opts ? opts.context : null;
@@ -1651,8 +1873,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let iconSize = opts && 'iconSize' in opts ? opts.iconSize : null;
       let borderWidth = opts && 'borderWidth' in opts ? opts.borderWidth : null;
       let theme = theme$.Theme.of(context);
-      let backgroundColor = theme.brightness === ui.Brightness.light ? colors.Colors.white : C[38] || CT.C38;
-      return new basic.Semantics.new({label: tooltip, button: true, child: new container.Container.new({width: sidebarWidth, margin: new edge_insets.EdgeInsets.symmetric({horizontal: sidePadding}), decoration: new box_decoration.BoxDecoration.new({shape: box_border.BoxShape.circle, border: box_border.Border.all({color: theme.colorScheme.primary, width: borderWidth}), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.1), blurRadius: 3, offset: C[14] || CT.C14})])}), child: new material.Material.new({color: backgroundColor, shape: C[39] || CT.C39, elevation: 0, child: new tooltip$.Tooltip.new({message: tooltip, child: new ink_well.InkWell.new({onTap: onTap, customBorder: C[39] || CT.C39, splashColor: theme.colorScheme.primary.withOpacity(0.2), highlightColor: theme.colorScheme.primary.withOpacity(0.1), child: new basic.SizedBox.new({width: buttonSize, height: buttonSize, child: new basic.Center.new({child: new icon$.Icon.new(icon, {color: theme.colorScheme.primary, size: iconSize})})})})})})})});
+      let backgroundColor = theme.brightness === ui.Brightness.light ? colors.Colors.white : C[39] || CT.C39;
+      return new basic.Semantics.new({label: tooltip, button: true, child: new container.Container.new({width: sidebarWidth, margin: new edge_insets.EdgeInsets.symmetric({horizontal: sidePadding}), decoration: new box_decoration.BoxDecoration.new({shape: box_border.BoxShape.circle, border: box_border.Border.all({color: theme.colorScheme.primary, width: borderWidth}), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.1), blurRadius: 3, offset: C[14] || CT.C14})])}), child: new material.Material.new({color: backgroundColor, shape: C[40] || CT.C40, elevation: 0, child: new tooltip$.Tooltip.new({message: tooltip, child: new ink_well.InkWell.new({onTap: onTap, customBorder: C[40] || CT.C40, splashColor: theme.colorScheme.primary.withOpacity(0.2), highlightColor: theme.colorScheme.primary.withOpacity(0.1), child: new basic.SizedBox.new({width: buttonSize, height: buttonSize, child: new basic.Center.new({child: new icon$.Icon.new(icon, {color: theme.colorScheme.primary, size: iconSize})})})})})})})});
     }
   };
   (bottom_action_bar.BottomActionBar.new = function(opts) {
@@ -1723,7 +1945,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let content = opts && 'content' in opts ? opts.content : null;
       let category = opts && 'category' in opts ? opts.category : null;
       let size = opts && 'size' in opts ? opts.size : null;
-      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[43] || CT.C43;
+      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[44] || CT.C44;
       return async.async(note$.Note, (function* addNote() {
         let id = new core.DateTime.now().millisecondsSinceEpoch[$toString]();
         let note = note$.Note.create({id: id, content: content, category: category, size: size, tagIds: tagIds});
@@ -1832,6 +2054,161 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       return new note_service.NoteService._internal();
     }
   }, false);
+  var _defaultTags = dart.privateName(tag_service, "_defaultTags");
+  var _tags$ = dart.privateName(tag_service, "_tags");
+  var _tagsStreamController = dart.privateName(tag_service, "_tagsStreamController");
+  var _notifyListeners$ = dart.privateName(tag_service, "_notifyListeners");
+  tag_service.TagService = class TagService extends core.Object {
+    static new() {
+      return tag_service.TagService._instance;
+    }
+    static ['_#new#tearOff']() {
+      return tag_service.TagService.new();
+    }
+    static ['_#_internal#tearOff']() {
+      return new tag_service.TagService._internal();
+    }
+    get tagsStream() {
+      return this[_tagsStreamController].stream;
+    }
+    getAllTags() {
+      return T.ListOfTagData().unmodifiable(this[_tags$]);
+    }
+    getTagById(id) {
+      try {
+        return this[_tags$][$firstWhere](dart.fn(tag => tag.id === id, T.TagDataTobool()));
+      } catch (e$) {
+        let e = dart.getThrown(e$);
+        if (core.Object.is(e)) {
+          return null;
+        } else
+          throw e$;
+      }
+    }
+    addTag(label) {
+      return async.async(tag$.TagData, (function* addTag() {
+        let id = new core.DateTime.now().millisecondsSinceEpoch[$toString]();
+        let tag = new tag$.TagData.new({id: id, label: label});
+        this[_tags$][$add](tag);
+        this[_notifyListeners$]();
+        return tag;
+      }).bind(this));
+    }
+    updateTag(id, label) {
+      return async.async(T.TagDataN(), (function* updateTag() {
+        let index = this[_tags$][$indexWhere](dart.fn(tag => tag.id === id, T.TagDataTobool()));
+        if (index === -1) {
+          return null;
+        }
+        if (this[_tags$][$_get](index).label === label) {
+          return this[_tags$][$_get](index);
+        }
+        if (this[_tags$][$any](dart.fn(t => t.id !== id && t.label[$toLowerCase]() === label[$toLowerCase](), T.TagDataTobool()))) {
+          print.debugPrint("Tag " + label + " already exists. Using original name.");
+          return this[_tags$][$_get](index);
+        }
+        let updatedTag = this[_tags$][$_get](index).copyWith({label: label});
+        this[_tags$][$_set](index, updatedTag);
+        this[_notifyListeners$]();
+        return updatedTag;
+      }).bind(this));
+    }
+    deleteTag(id) {
+      return async.async(core.bool, (function* deleteTag() {
+        if (this[_defaultTags][$any](dart.fn(tag => tag.id === id, T.TagDataTobool()))) {
+          return false;
+        }
+        let index = this[_tags$][$indexWhere](dart.fn(tag => tag.id === id, T.TagDataTobool()));
+        if (index === -1) {
+          return false;
+        }
+        this[_tags$][$removeAt](index);
+        this[_notifyListeners$]();
+        return true;
+      }).bind(this));
+    }
+    toggleTagSelection(id) {
+      return async.async(T.TagDataN(), (function* toggleTagSelection() {
+        let index = this[_tags$][$indexWhere](dart.fn(tag => tag.id === id, T.TagDataTobool()));
+        if (index === -1) {
+          return null;
+        }
+        let tag = this[_tags$][$_get](index);
+        let updatedTag = tag.copyWith({isSelected: !tag.isSelected});
+        this[_tags$][$_set](index, updatedTag);
+        this[_notifyListeners$]();
+        return updatedTag;
+      }).bind(this));
+    }
+    resetTagSelections() {
+      return async.async(dart.void, (function* resetTagSelections() {
+        let changed = false;
+        for (let i = 0; i < this[_tags$][$length]; i = i + 1) {
+          if (this[_tags$][$_get](i).isSelected) {
+            this[_tags$][$_set](i, this[_tags$][$_get](i).copyWith({isSelected: false}));
+            changed = true;
+          }
+        }
+        if (changed) {
+          this[_notifyListeners$]();
+        }
+      }).bind(this));
+    }
+    resetToDefaults() {
+      return async.async(dart.void, (function* resetToDefaults() {
+        this[_tags$][$clear]();
+        this[_tags$][$addAll](this[_defaultTags]);
+        this[_notifyListeners$]();
+      }).bind(this));
+    }
+    [_notifyListeners$]() {
+      if (!this[_tagsStreamController].isClosed) {
+        this[_tagsStreamController].add(T.ListOfTagData().unmodifiable(this[_tags$]));
+      }
+    }
+    dispose() {
+      this[_tagsStreamController].close();
+    }
+  };
+  (tag_service.TagService._internal = function() {
+    this[_defaultTags] = T.JSArrayOfTagData().of([new tag$.TagData.new({id: "1", label: "Work"}), new tag$.TagData.new({id: "2", label: "Ideas"}), new tag$.TagData.new({id: "3", label: "Tasks"}), new tag$.TagData.new({id: "4", label: "Personal"}), new tag$.TagData.new({id: "5", label: "Travel"})]);
+    this[_tags$] = T.JSArrayOfTagData().of([]);
+    this[_tagsStreamController] = T.StreamControllerOfListOfTagData().broadcast();
+    this[_tags$][$addAll](this[_defaultTags]);
+  }).prototype = tag_service.TagService.prototype;
+  dart.addTypeTests(tag_service.TagService);
+  dart.addTypeCaches(tag_service.TagService);
+  dart.setMethodSignature(tag_service.TagService, () => ({
+    __proto__: dart.getMethods(tag_service.TagService.__proto__),
+    getAllTags: dart.fnType(core.List$(tag$.TagData), []),
+    getTagById: dart.fnType(dart.nullable(tag$.TagData), [core.String]),
+    addTag: dart.fnType(async.Future$(tag$.TagData), [core.String]),
+    updateTag: dart.fnType(async.Future$(dart.nullable(tag$.TagData)), [core.String, core.String]),
+    deleteTag: dart.fnType(async.Future$(core.bool), [core.String]),
+    toggleTagSelection: dart.fnType(async.Future$(dart.nullable(tag$.TagData)), [core.String]),
+    resetTagSelections: dart.fnType(async.Future$(dart.void), []),
+    resetToDefaults: dart.fnType(async.Future$(dart.void), []),
+    [_notifyListeners$]: dart.fnType(dart.void, []),
+    dispose: dart.fnType(dart.void, [])
+  }));
+  dart.setStaticMethodSignature(tag_service.TagService, () => ['new']);
+  dart.setGetterSignature(tag_service.TagService, () => ({
+    __proto__: dart.getGetters(tag_service.TagService.__proto__),
+    tagsStream: async.Stream$(core.List$(tag$.TagData))
+  }));
+  dart.setLibraryUri(tag_service.TagService, I[9]);
+  dart.setFieldSignature(tag_service.TagService, () => ({
+    __proto__: dart.getFields(tag_service.TagService.__proto__),
+    [_defaultTags]: dart.finalFieldType(core.List$(tag$.TagData)),
+    [_tags$]: dart.finalFieldType(core.List$(tag$.TagData)),
+    [_tagsStreamController]: dart.finalFieldType(async.StreamController$(core.List$(tag$.TagData)))
+  }));
+  dart.setStaticFieldSignature(tag_service.TagService, () => ['_instance']);
+  dart.defineLazy(tag_service.TagService, {
+    /*tag_service.TagService._instance*/get _instance() {
+      return new tag_service.TagService._internal();
+    }
+  }, false);
   var id$ = dart.privateName(note$, "Note.id");
   var content$ = dart.privateName(note$, "Note.content");
   var category$ = dart.privateName(note$, "Note.category");
@@ -1896,7 +2273,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let size = opts && 'size' in opts ? opts.size : null;
       let createdAt = opts && 'createdAt' in opts ? opts.createdAt : null;
       let updatedAt = opts && 'updatedAt' in opts ? opts.updatedAt : null;
-      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[43] || CT.C43;
+      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[44] || CT.C44;
       let metadata = opts && 'metadata' in opts ? opts.metadata : null;
       return new note$.Note.new({id: id, content: content, category: category, size: size, createdAt: createdAt, updatedAt: updatedAt, tagIds: tagIds, metadata: metadata});
     }
@@ -1905,7 +2282,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let content = opts && 'content' in opts ? opts.content : null;
       let category = opts && 'category' in opts ? opts.category : null;
       let size = opts && 'size' in opts ? opts.size : null;
-      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[43] || CT.C43;
+      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[44] || CT.C44;
       let metadata = opts && 'metadata' in opts ? opts.metadata : null;
       let now = new core.DateTime.now();
       return new note$.Note.new({id: id, content: content, category: category, size: size, createdAt: now, updatedAt: now, tagIds: tagIds, metadata: metadata});
@@ -1915,12 +2292,12 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let content = opts && 'content' in opts ? opts.content : null;
       let category = opts && 'category' in opts ? opts.category : null;
       let size = opts && 'size' in opts ? opts.size : null;
-      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[43] || CT.C43;
+      let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[44] || CT.C44;
       let metadata = opts && 'metadata' in opts ? opts.metadata : null;
       return note$.Note.create({id: id, content: content, category: category, size: size, tagIds: tagIds, metadata: metadata});
     }
     copyWith(opts) {
-      let t1, t1$, t1$0, t1$1, t1$2, t1$3, t1$4, t1$5;
+      let t2, t2$, t2$0, t2$1, t2$2, t2$3, t2$4, t2$5;
       let id = opts && 'id' in opts ? opts.id : null;
       let content = opts && 'content' in opts ? opts.content : null;
       let category = opts && 'category' in opts ? opts.category : null;
@@ -1930,7 +2307,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let tagIds = opts && 'tagIds' in opts ? opts.tagIds : null;
       let metadata = opts && 'metadata' in opts ? opts.metadata : null;
       let clearMetadata = opts && 'clearMetadata' in opts ? opts.clearMetadata : false;
-      return new note$.Note.new({id: (t1 = id, t1 == null ? this.id : t1), content: (t1$ = content, t1$ == null ? this.content : t1$), category: (t1$0 = category, t1$0 == null ? this.category : t1$0), size: (t1$1 = size, t1$1 == null ? this.size : t1$1), createdAt: (t1$2 = createdAt, t1$2 == null ? this.createdAt : t1$2), updatedAt: (t1$3 = updatedAt, t1$3 == null ? this.updatedAt : t1$3), tagIds: (t1$4 = tagIds, t1$4 == null ? this.tagIds : t1$4), metadata: clearMetadata ? null : (t1$5 = metadata, t1$5 == null ? this.metadata : t1$5)});
+      return new note$.Note.new({id: (t2 = id, t2 == null ? this.id : t2), content: (t2$ = content, t2$ == null ? this.content : t2$), category: (t2$0 = category, t2$0 == null ? this.category : t2$0), size: (t2$1 = size, t2$1 == null ? this.size : t2$1), createdAt: (t2$2 = createdAt, t2$2 == null ? this.createdAt : t2$2), updatedAt: (t2$3 = updatedAt, t2$3 == null ? this.updatedAt : t2$3), tagIds: (t2$4 = tagIds, t2$4 == null ? this.tagIds : t2$4), metadata: clearMetadata ? null : (t2$5 = metadata, t2$5 == null ? this.metadata : t2$5)});
     }
     update(opts) {
       let content = opts && 'content' in opts ? opts.content : null;
@@ -1942,8 +2319,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       return this.copyWith({content: content, category: category, size: size, updatedAt: new core.DateTime.now(), tagIds: tagIds, metadata: metadata, clearMetadata: clearMetadata});
     }
     static fromJson(json) {
-      let t1;
-      return new note$.Note.new({id: core.String.as(json[$_get]("id")), content: core.String.as(json[$_get]("content")), category: core.String.as(json[$_get]("category")), size: core.String.as(json[$_get]("size")), createdAt: core.DateTime.parse(core.String.as(json[$_get]("createdAt"))), updatedAt: core.DateTime.parse(core.String.as(json[$_get]("updatedAt"))), tagIds: T.ListOfString().from(core.Iterable.as((t1 = json[$_get]("tagIds"), t1 == null ? [] : t1))), metadata: T.MapNOfString$dynamic().as(json[$_get]("metadata"))});
+      let t2;
+      return new note$.Note.new({id: core.String.as(json[$_get]("id")), content: core.String.as(json[$_get]("content")), category: core.String.as(json[$_get]("category")), size: core.String.as(json[$_get]("size")), createdAt: core.DateTime.parse(core.String.as(json[$_get]("createdAt"))), updatedAt: core.DateTime.parse(core.String.as(json[$_get]("updatedAt"))), tagIds: T.ListOfString().from(core.Iterable.as((t2 = json[$_get]("tagIds"), t2 == null ? [] : t2))), metadata: T.MapNOfString$dynamic().as(json[$_get]("metadata"))});
     }
     static ['_#fromJson#tearOff'](json) {
       return note$.Note.fromJson(json);
@@ -1966,7 +2343,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     let size = opts && 'size' in opts ? opts.size : null;
     let createdAt = opts && 'createdAt' in opts ? opts.createdAt : null;
     let updatedAt = opts && 'updatedAt' in opts ? opts.updatedAt : null;
-    let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[43] || CT.C43;
+    let tagIds = opts && 'tagIds' in opts ? opts.tagIds : C[44] || CT.C44;
     let metadata = opts && 'metadata' in opts ? opts.metadata : null;
     this[id$] = id;
     this[content$] = content;
@@ -1987,7 +2364,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     toJson: dart.fnType(core.Map$(core.String, dart.dynamic), [])
   }));
   dart.setStaticMethodSignature(note$.Note, () => ['create', 'fromJson']);
-  dart.setLibraryUri(note$.Note, I[9]);
+  dart.setLibraryUri(note$.Note, I[10]);
   dart.setFieldSignature(note$.Note, () => ({
     __proto__: dart.getFields(note$.Note.__proto__),
     id: dart.finalFieldType(core.String),
@@ -2001,13 +2378,16 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   }));
   dart.defineExtensionMethods(note$.Note, ['_equals']);
   dart.defineExtensionAccessors(note$.Note, ['hashCode']);
-  var label$ = dart.privateName(category_button, "CategoryButton.label");
-  var isSelected$ = dart.privateName(category_button, "CategoryButton.isSelected");
-  var onTap$ = dart.privateName(category_button, "CategoryButton.onTap");
-  var height$ = dart.privateName(category_button, "CategoryButton.height");
-  var margin$ = dart.privateName(category_button, "CategoryButton.margin");
-  var isCompact$2 = dart.privateName(category_button, "CategoryButton.isCompact");
-  category_button.CategoryButton = class CategoryButton extends framework.StatelessWidget {
+  var id$0 = dart.privateName(tag$, "TagData.id");
+  var label$ = dart.privateName(tag$, "TagData.label");
+  var isSelected$ = dart.privateName(tag$, "TagData.isSelected");
+  tag$.TagData = class TagData extends core.Object {
+    get id() {
+      return this[id$0];
+    }
+    set id(value) {
+      super.id = value;
+    }
     get label() {
       return this[label$];
     }
@@ -2016,6 +2396,73 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     }
     get isSelected() {
       return this[isSelected$];
+    }
+    set isSelected(value) {
+      super.isSelected = value;
+    }
+    static ['_#new#tearOff'](opts) {
+      let id = opts && 'id' in opts ? opts.id : null;
+      let label = opts && 'label' in opts ? opts.label : null;
+      let isSelected = opts && 'isSelected' in opts ? opts.isSelected : false;
+      return new tag$.TagData.new({id: id, label: label, isSelected: isSelected});
+    }
+    copyWith(opts) {
+      let t2, t2$, t2$0;
+      let id = opts && 'id' in opts ? opts.id : null;
+      let label = opts && 'label' in opts ? opts.label : null;
+      let isSelected = opts && 'isSelected' in opts ? opts.isSelected : null;
+      return new tag$.TagData.new({id: (t2 = id, t2 == null ? this.id : t2), label: (t2$ = label, t2$ == null ? this.label : t2$), isSelected: (t2$0 = isSelected, t2$0 == null ? this.isSelected : t2$0)});
+    }
+    _equals(other) {
+      if (other == null) return false;
+      return this === other || tag$.TagData.is(other) && this[$runtimeType]._equals(other[$runtimeType]) && this.id === other.id && this.label === other.label && this.isSelected === other.isSelected;
+    }
+    get hashCode() {
+      return (this.id[$hashCode] ^ this.label[$hashCode] ^ this.isSelected[$hashCode]) >>> 0;
+    }
+    toString() {
+      return "TagData(id: " + this.id + ", label: " + this.label + ", isSelected: " + dart.str(this.isSelected) + ")";
+    }
+  };
+  (tag$.TagData.new = function(opts) {
+    let id = opts && 'id' in opts ? opts.id : null;
+    let label = opts && 'label' in opts ? opts.label : null;
+    let isSelected = opts && 'isSelected' in opts ? opts.isSelected : false;
+    this[id$0] = id;
+    this[label$] = label;
+    this[isSelected$] = isSelected;
+    ;
+  }).prototype = tag$.TagData.prototype;
+  dart.addTypeTests(tag$.TagData);
+  dart.addTypeCaches(tag$.TagData);
+  dart.setMethodSignature(tag$.TagData, () => ({
+    __proto__: dart.getMethods(tag$.TagData.__proto__),
+    copyWith: dart.fnType(tag$.TagData, [], {id: dart.nullable(core.String), isSelected: dart.nullable(core.bool), label: dart.nullable(core.String)}, {})
+  }));
+  dart.setLibraryUri(tag$.TagData, I[11]);
+  dart.setFieldSignature(tag$.TagData, () => ({
+    __proto__: dart.getFields(tag$.TagData.__proto__),
+    id: dart.finalFieldType(core.String),
+    label: dart.finalFieldType(core.String),
+    isSelected: dart.finalFieldType(core.bool)
+  }));
+  dart.defineExtensionMethods(tag$.TagData, ['_equals', 'toString']);
+  dart.defineExtensionAccessors(tag$.TagData, ['hashCode']);
+  var label$0 = dart.privateName(category_button, "CategoryButton.label");
+  var isSelected$0 = dart.privateName(category_button, "CategoryButton.isSelected");
+  var onTap$ = dart.privateName(category_button, "CategoryButton.onTap");
+  var height$ = dart.privateName(category_button, "CategoryButton.height");
+  var margin$ = dart.privateName(category_button, "CategoryButton.margin");
+  var isCompact$2 = dart.privateName(category_button, "CategoryButton.isCompact");
+  category_button.CategoryButton = class CategoryButton extends framework.StatelessWidget {
+    get label() {
+      return this[label$0];
+    }
+    set label(value) {
+      super.label = value;
+    }
+    get isSelected() {
+      return this[isSelected$0];
     }
     set isSelected(value) {
       super.isSelected = value;
@@ -2069,8 +2516,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     let height = opts && 'height' in opts ? opts.height : null;
     let margin = opts && 'margin' in opts ? opts.margin : null;
     let isCompact = opts && 'isCompact' in opts ? opts.isCompact : false;
-    this[label$] = label;
-    this[isSelected$] = isSelected;
+    this[label$0] = label;
+    this[isSelected$0] = isSelected;
     this[onTap$] = onTap;
     this[height$] = height;
     this[margin$] = margin;
@@ -2084,7 +2531,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     __proto__: dart.getMethods(category_button.CategoryButton.__proto__),
     build: dart.fnType(framework.Widget, [framework.BuildContext])
   }));
-  dart.setLibraryUri(category_button.CategoryButton, I[10]);
+  dart.setLibraryUri(category_button.CategoryButton, I[12]);
   dart.setFieldSignature(category_button.CategoryButton, () => ({
     __proto__: dart.getFields(category_button.CategoryButton.__proto__),
     label: dart.finalFieldType(core.String),
@@ -2116,25 +2563,25 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       return new size_selector.SizeSelector.new({key: key, selectedSize: selectedSize, onSizeSelected: onSizeSelected});
     }
     build(context) {
-      let sizeOptions = C[44] || CT.C44;
+      let sizeOptions = C[45] || CT.C45;
       let theme = theme$.Theme.of(context);
       let isCompact = media_query.MediaQuery.of(context).size.width < 768;
       let height = isCompact ? 36 * 0.9 : 36;
       let padding = isCompact ? 8 * 0.7 : 8;
       return new basic.Padding.new({padding: new edge_insets.EdgeInsets.all(padding), child: new basic.Row.new({mainAxisSize: flex.MainAxisSize.min, children: T.JSArrayOfWidget().of([new container.Container.new({height: height, decoration: new box_decoration.BoxDecoration.new({borderRadius: new border_radius.BorderRadius.circular(height / 2), border: box_border.Border.all({color: theme.colorScheme.primary, width: 1})}), child: new basic.Row.new({mainAxisSize: flex.MainAxisSize.min, children: (() => {
-                  let t1 = T.JSArrayOfWidget().of([]);
+                  let t2 = T.JSArrayOfWidget().of([]);
                   for (let i = 0; i < sizeOptions[$length]; i = i + 1)
-                    t1[$addAll]((() => {
-                      let t2 = T.JSArrayOfWidget().of([]);
-                      if (i > 0) t2.push(C[45] || CT.C45);
-                      t2.push(new size_selector.SizeOption.new({text: sizeOptions[$_get](i), isSelected: this.selectedSize === sizeOptions[$_get](i), onTap: dart.fn(() => {
-                          let t3;
-                          t3 = sizeOptions[$_get](i);
-                          return this.onSizeSelected(t3);
+                    t2[$addAll]((() => {
+                      let t3 = T.JSArrayOfWidget().of([]);
+                      if (i > 0) t3.push(C[46] || CT.C46);
+                      t3.push(new size_selector.SizeOption.new({text: sizeOptions[$_get](i), isSelected: this.selectedSize === sizeOptions[$_get](i), onTap: dart.fn(() => {
+                          let t4;
+                          t4 = sizeOptions[$_get](i);
+                          return this.onSizeSelected(t4);
                         }, T.VoidTovoid()), width: isCompact ? 75 : 85}));
-                      return t2;
+                      return t3;
                     })());
-                  return t1;
+                  return t2;
                 })()})})])})});
     }
   };
@@ -2153,14 +2600,14 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     __proto__: dart.getMethods(size_selector.SizeSelector.__proto__),
     build: dart.fnType(framework.Widget, [framework.BuildContext])
   }));
-  dart.setLibraryUri(size_selector.SizeSelector, I[11]);
+  dart.setLibraryUri(size_selector.SizeSelector, I[13]);
   dart.setFieldSignature(size_selector.SizeSelector, () => ({
     __proto__: dart.getFields(size_selector.SizeSelector.__proto__),
     selectedSize: dart.finalFieldType(core.String),
     onSizeSelected: dart.finalFieldType(dart.fnType(dart.dynamic, [core.String]))
   }));
   var text$ = dart.privateName(size_selector, "SizeOption.text");
-  var isSelected$0 = dart.privateName(size_selector, "SizeOption.isSelected");
+  var isSelected$1 = dart.privateName(size_selector, "SizeOption.isSelected");
   var onTap$0 = dart.privateName(size_selector, "SizeOption.onTap");
   var width$ = dart.privateName(size_selector, "SizeOption.width");
   size_selector.SizeOption = class SizeOption extends framework.StatelessWidget {
@@ -2171,7 +2618,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       super.text = value;
     }
     get isSelected() {
-      return this[isSelected$0];
+      return this[isSelected$1];
     }
     set isSelected(value) {
       super.isSelected = value;
@@ -2209,7 +2656,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     let onTap = opts && 'onTap' in opts ? opts.onTap : null;
     let width = opts && 'width' in opts ? opts.width : 85;
     this[text$] = text;
-    this[isSelected$0] = isSelected;
+    this[isSelected$1] = isSelected;
     this[onTap$0] = onTap;
     this[width$] = width;
     size_selector.SizeOption.__proto__.new.call(this, {key: key});
@@ -2221,7 +2668,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     __proto__: dart.getMethods(size_selector.SizeOption.__proto__),
     build: dart.fnType(framework.Widget, [framework.BuildContext])
   }));
-  dart.setLibraryUri(size_selector.SizeOption, I[11]);
+  dart.setLibraryUri(size_selector.SizeOption, I[13]);
   dart.setFieldSignature(size_selector.SizeOption, () => ({
     __proto__: dart.getFields(size_selector.SizeOption.__proto__),
     text: dart.finalFieldType(core.String),
@@ -2231,6 +2678,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
   }));
   var controller$ = dart.privateName(note_input_area, "NoteInputArea.controller");
   var focusNode$0 = dart.privateName(note_input_area, "NoteInputArea.focusNode");
+  var appliedTags$0 = dart.privateName(note_input_area, "NoteInputArea.appliedTags");
+  var onTagAdded$0 = dart.privateName(note_input_area, "NoteInputArea.onTagAdded");
+  var onTagRemoved$0 = dart.privateName(note_input_area, "NoteInputArea.onTagRemoved");
   var onDelete$0 = dart.privateName(note_input_area, "NoteInputArea.onDelete");
   var onUndo$0 = dart.privateName(note_input_area, "NoteInputArea.onUndo");
   var onFormat$0 = dart.privateName(note_input_area, "NoteInputArea.onFormat");
@@ -2253,6 +2703,24 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     }
     set focusNode(value) {
       super.focusNode = value;
+    }
+    get appliedTags() {
+      return this[appliedTags$0];
+    }
+    set appliedTags(value) {
+      super.appliedTags = value;
+    }
+    get onTagAdded() {
+      return this[onTagAdded$0];
+    }
+    set onTagAdded(value) {
+      super.onTagAdded = value;
+    }
+    get onTagRemoved() {
+      return this[onTagRemoved$0];
+    }
+    set onTagRemoved(value) {
+      super.onTagRemoved = value;
     }
     get onDelete() {
       return this[onDelete$0];
@@ -2294,13 +2762,16 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let key = opts && 'key' in opts ? opts.key : null;
       let controller = opts && 'controller' in opts ? opts.controller : null;
       let focusNode = opts && 'focusNode' in opts ? opts.focusNode : null;
+      let appliedTags = opts && 'appliedTags' in opts ? opts.appliedTags : C[35] || CT.C35;
+      let onTagAdded = opts && 'onTagAdded' in opts ? opts.onTagAdded : null;
+      let onTagRemoved = opts && 'onTagRemoved' in opts ? opts.onTagRemoved : null;
       let onDelete = opts && 'onDelete' in opts ? opts.onDelete : null;
       let onUndo = opts && 'onUndo' in opts ? opts.onUndo : null;
       let onFormat = opts && 'onFormat' in opts ? opts.onFormat : null;
       let onCamera = opts && 'onCamera' in opts ? opts.onCamera : null;
       let onMic = opts && 'onMic' in opts ? opts.onMic : null;
       let onLink = opts && 'onLink' in opts ? opts.onLink : null;
-      return new note_input_area.NoteInputArea.new({key: key, controller: controller, focusNode: focusNode, onDelete: onDelete, onUndo: onUndo, onFormat: onFormat, onCamera: onCamera, onMic: onMic, onLink: onLink});
+      return new note_input_area.NoteInputArea.new({key: key, controller: controller, focusNode: focusNode, appliedTags: appliedTags, onTagAdded: onTagAdded, onTagRemoved: onTagRemoved, onDelete: onDelete, onUndo: onUndo, onFormat: onFormat, onCamera: onCamera, onMic: onMic, onLink: onLink});
     }
     build(context) {
       let isCompact = media_query.MediaQuery.of(context).size.width < 768;
@@ -2308,14 +2779,30 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let iconSize = layout.AppLayout.getIconSize(context);
       let actionBarHeight = isCompact ? 45 : 60;
       let padding = isCompact ? 10 : 16;
-      let contentPadding = isCompact ? C[46] || CT.C46 : C[47] || CT.C47;
-      return new container.Container.new({margin: C[48] || CT.C48, decoration: new box_decoration.BoxDecoration.new({color: theme.brightness === ui.Brightness.light ? colors.Colors.white : C[49] || CT.C49, border: box_border.Border.all({color: theme.brightness === ui.Brightness.light ? colors.Colors.grey.shade300 : colors.Colors.grey.shade800}), borderRadius: new border_radius.BorderRadius.circular(8), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.05), blurRadius: 4, offset: C[37] || CT.C37})])}), child: new basic.Column.new({children: T.JSArrayOfWidget().of([new note_input_area.TopActionBar.new({height: actionBarHeight, padding: padding, iconSize: iconSize, onDeletePressed: this.onDelete, onUndoPressed: this.onUndo, onFormatPressed: this.onFormat}), new divider.Divider.new({height: 1, thickness: 1, color: theme.dividerTheme.color}), new basic.Expanded.new({child: new basic.Padding.new({padding: new edge_insets.EdgeInsets.only({top: isCompact ? 5 : 8}), child: new text_field.TextField.new({controller: this.controller, focusNode: this.focusNode, decoration: new input_decorator.InputDecoration.new({contentPadding: contentPadding, hintText: "Input text", border: input_border.InputBorder.none, hintStyle: new text_style.TextStyle.new({color: theme.brightness === ui.Brightness.light ? colors.Colors.grey.shade400 : colors.Colors.grey.shade600})}), style: theme.textTheme.bodyLarge, maxLines: null, expands: true, textAlignVertical: alignment.TextAlignVertical.top, textCapitalization: text_input.TextCapitalization.sentences})})}), new divider.Divider.new({height: 1, thickness: 1, color: theme.dividerTheme.color}), new note_input_area.BottomActionButtons.new({height: actionBarHeight, padding: padding, iconSize: iconSize, onCameraPressed: this.onCamera, onMicPressed: this.onMic, onLinkPressed: this.onLink})])})});
+      let contentPadding = isCompact ? C[47] || CT.C47 : C[48] || CT.C48;
+      return new (T.DragTargetOfTagData()).new({onAccept: dart.fn(tag => {
+          if (this.onTagAdded != null) {
+            dart.nullCheck(this.onTagAdded)(tag);
+          }
+        }, T.TagDataTovoid()), onWillAccept: dart.fn(tag => tag != null && !this.appliedTags[$contains](tag), T.TagDataNTobool()), builder: dart.fn((context, candidateItems, rejectedItems) => {
+          let isHighlighted = candidateItems[$isNotEmpty];
+          return new container.Container.new({margin: C[49] || CT.C49, decoration: new box_decoration.BoxDecoration.new({color: theme.brightness === ui.Brightness.light ? isHighlighted ? colors.Colors.blue.shade50 : colors.Colors.white : isHighlighted ? C[50] || CT.C50 : C[51] || CT.C51, border: box_border.Border.all({color: isHighlighted ? theme.colorScheme.primary.withOpacity(0.5) : theme.brightness === ui.Brightness.light ? colors.Colors.grey.shade300 : colors.Colors.grey.shade800}), borderRadius: new border_radius.BorderRadius.circular(8), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.05), blurRadius: 4, offset: C[38] || CT.C38})])}), child: new basic.Column.new({children: (() => {
+                let t4 = T.JSArrayOfWidget().of([new note_input_area.TopActionBar.new({height: actionBarHeight, padding: padding, iconSize: iconSize, onDeletePressed: this.onDelete, onUndoPressed: this.onUndo, onFormatPressed: this.onFormat}), new divider.Divider.new({height: 1, thickness: 1, color: theme.dividerTheme.color}), new basic.Expanded.new({child: new basic.Padding.new({padding: new edge_insets.EdgeInsets.only({top: isCompact ? 5 : 8}), child: new text_field.TextField.new({controller: this.controller, focusNode: this.focusNode, decoration: new input_decorator.InputDecoration.new({contentPadding: contentPadding, hintText: "Input text", border: input_border.InputBorder.none, hintStyle: new text_style.TextStyle.new({color: theme.brightness === ui.Brightness.light ? colors.Colors.grey.shade400 : colors.Colors.grey.shade600})}), style: theme.textTheme.bodyLarge, maxLines: null, expands: true, textAlignVertical: alignment.TextAlignVertical.top, textCapitalization: text_input.TextCapitalization.sentences})})})]);
+                if (this.appliedTags[$isNotEmpty]) t4.push(new basic.Padding.new({padding: C[52] || CT.C52, child: new basic.Align.new({alignment: alignment.Alignment.centerLeft, child: new tag_list.TagList.new({tags: this.appliedTags, onRemoveTag: this.onTagRemoved, isSmall: true, isScrollable: true})})}));
+                t4.push(new divider.Divider.new({height: 1, thickness: 1, color: theme.dividerTheme.color}));
+                t4.push(new note_input_area.BottomActionButtons.new({height: actionBarHeight, padding: padding, iconSize: iconSize, onCameraPressed: this.onCamera, onMicPressed: this.onMic, onLinkPressed: this.onLink}));
+                return t4;
+              })()})});
+        }, T.BuildContextAndListOfTagDataNAndListToContainer())});
     }
   };
   (note_input_area.NoteInputArea.new = function(opts) {
     let key = opts && 'key' in opts ? opts.key : null;
     let controller = opts && 'controller' in opts ? opts.controller : null;
     let focusNode = opts && 'focusNode' in opts ? opts.focusNode : null;
+    let appliedTags = opts && 'appliedTags' in opts ? opts.appliedTags : C[35] || CT.C35;
+    let onTagAdded = opts && 'onTagAdded' in opts ? opts.onTagAdded : null;
+    let onTagRemoved = opts && 'onTagRemoved' in opts ? opts.onTagRemoved : null;
     let onDelete = opts && 'onDelete' in opts ? opts.onDelete : null;
     let onUndo = opts && 'onUndo' in opts ? opts.onUndo : null;
     let onFormat = opts && 'onFormat' in opts ? opts.onFormat : null;
@@ -2324,6 +2811,9 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     let onLink = opts && 'onLink' in opts ? opts.onLink : null;
     this[controller$] = controller;
     this[focusNode$0] = focusNode;
+    this[appliedTags$0] = appliedTags;
+    this[onTagAdded$0] = onTagAdded;
+    this[onTagRemoved$0] = onTagRemoved;
     this[onDelete$0] = onDelete;
     this[onUndo$0] = onUndo;
     this[onFormat$0] = onFormat;
@@ -2339,11 +2829,14 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     __proto__: dart.getMethods(note_input_area.NoteInputArea.__proto__),
     build: dart.fnType(framework.Widget, [framework.BuildContext])
   }));
-  dart.setLibraryUri(note_input_area.NoteInputArea, I[12]);
+  dart.setLibraryUri(note_input_area.NoteInputArea, I[14]);
   dart.setFieldSignature(note_input_area.NoteInputArea, () => ({
     __proto__: dart.getFields(note_input_area.NoteInputArea.__proto__),
     controller: dart.finalFieldType(editable_text.TextEditingController),
     focusNode: dart.finalFieldType(dart.nullable(focus_manager.FocusNode)),
+    appliedTags: dart.finalFieldType(core.List$(tag$.TagData)),
+    onTagAdded: dart.finalFieldType(dart.nullable(dart.fnType(dart.dynamic, [tag$.TagData]))),
+    onTagRemoved: dart.finalFieldType(dart.nullable(dart.fnType(dart.dynamic, [tag$.TagData]))),
     onDelete: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
     onUndo: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
     onFormat: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
@@ -2405,7 +2898,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       return new note_input_area.TopActionBar.new({key: key, height: height, padding: padding, iconSize: iconSize, onDeletePressed: onDeletePressed, onUndoPressed: onUndoPressed, onFormatPressed: onFormatPressed});
     }
     build(context) {
-      return new container.Container.new({height: this.height, padding: new edge_insets.EdgeInsets.symmetric({horizontal: this.padding}), child: new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceEvenly, children: T.JSArrayOfWidget().of([C[34] || CT.C34, new action_button.ActionButton.new({icon: icons.Icons.delete_outline, onPressed: this.onDeletePressed, iconSize: this.iconSize, tooltip: "Delete note"}), C[50] || CT.C50, new action_button.ActionButton.new({icon: icons.Icons.replay_outlined, onPressed: this.onUndoPressed, iconSize: this.iconSize, tooltip: "Undo"}), C[50] || CT.C50, new action_button.ActionButton.new({icon: icons.Icons.format_align_left, onPressed: this.onFormatPressed, iconSize: this.iconSize, tooltip: "Format text"}), C[34] || CT.C34])})});
+      return new container.Container.new({height: this.height, padding: new edge_insets.EdgeInsets.symmetric({horizontal: this.padding}), child: new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceEvenly, children: T.JSArrayOfWidget().of([C[34] || CT.C34, new action_button.ActionButton.new({icon: icons.Icons.delete_outline, onPressed: this.onDeletePressed, iconSize: this.iconSize, tooltip: "Delete note"}), C[53] || CT.C53, new action_button.ActionButton.new({icon: icons.Icons.replay_outlined, onPressed: this.onUndoPressed, iconSize: this.iconSize, tooltip: "Undo"}), C[53] || CT.C53, new action_button.ActionButton.new({icon: icons.Icons.format_align_left, onPressed: this.onFormatPressed, iconSize: this.iconSize, tooltip: "Format text"}), C[34] || CT.C34])})});
     }
   };
   (note_input_area.TopActionBar.new = function(opts) {
@@ -2431,7 +2924,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     __proto__: dart.getMethods(note_input_area.TopActionBar.__proto__),
     build: dart.fnType(framework.Widget, [framework.BuildContext])
   }));
-  dart.setLibraryUri(note_input_area.TopActionBar, I[12]);
+  dart.setLibraryUri(note_input_area.TopActionBar, I[14]);
   dart.setFieldSignature(note_input_area.TopActionBar, () => ({
     __proto__: dart.getFields(note_input_area.TopActionBar.__proto__),
     height: dart.finalFieldType(core.double),
@@ -2495,7 +2988,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       return new note_input_area.BottomActionButtons.new({key: key, height: height, padding: padding, iconSize: iconSize, onCameraPressed: onCameraPressed, onMicPressed: onMicPressed, onLinkPressed: onLinkPressed});
     }
     build(context) {
-      return new container.Container.new({height: this.height, padding: new edge_insets.EdgeInsets.symmetric({horizontal: this.padding}), child: new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceEvenly, children: T.JSArrayOfWidget().of([C[34] || CT.C34, new action_button.ActionButton.new({icon: icons.Icons.camera_alt_outlined, onPressed: this.onCameraPressed, iconSize: this.iconSize, tooltip: "Take photo"}), C[50] || CT.C50, new action_button.ActionButton.new({icon: icons.Icons.mic_none_outlined, onPressed: this.onMicPressed, iconSize: this.iconSize, tooltip: "Record audio"}), C[50] || CT.C50, new action_button.ActionButton.new({icon: icons.Icons.link, onPressed: this.onLinkPressed, iconSize: this.iconSize, tooltip: "Add link"}), C[34] || CT.C34])})});
+      return new container.Container.new({height: this.height, padding: new edge_insets.EdgeInsets.symmetric({horizontal: this.padding}), child: new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceEvenly, children: T.JSArrayOfWidget().of([C[34] || CT.C34, new action_button.ActionButton.new({icon: icons.Icons.camera_alt_outlined, onPressed: this.onCameraPressed, iconSize: this.iconSize, tooltip: "Take photo"}), C[53] || CT.C53, new action_button.ActionButton.new({icon: icons.Icons.mic_none_outlined, onPressed: this.onMicPressed, iconSize: this.iconSize, tooltip: "Record audio"}), C[53] || CT.C53, new action_button.ActionButton.new({icon: icons.Icons.link, onPressed: this.onLinkPressed, iconSize: this.iconSize, tooltip: "Add link"}), C[34] || CT.C34])})});
     }
   };
   (note_input_area.BottomActionButtons.new = function(opts) {
@@ -2521,7 +3014,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     __proto__: dart.getMethods(note_input_area.BottomActionButtons.__proto__),
     build: dart.fnType(framework.Widget, [framework.BuildContext])
   }));
-  dart.setLibraryUri(note_input_area.BottomActionButtons, I[12]);
+  dart.setLibraryUri(note_input_area.BottomActionButtons, I[14]);
   dart.setFieldSignature(note_input_area.BottomActionButtons, () => ({
     __proto__: dart.getFields(note_input_area.BottomActionButtons.__proto__),
     height: dart.finalFieldType(core.double),
@@ -2531,81 +3024,12 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     onMicPressed: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
     onLinkPressed: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, [])))
   }));
-  var id$0 = dart.privateName(tag, "TagData.id");
-  var label$0 = dart.privateName(tag, "TagData.label");
-  var isSelected$1 = dart.privateName(tag, "TagData.isSelected");
-  tag.TagData = class TagData extends core.Object {
-    get id() {
-      return this[id$0];
-    }
-    set id(value) {
-      super.id = value;
-    }
-    get label() {
-      return this[label$0];
-    }
-    set label(value) {
-      super.label = value;
-    }
-    get isSelected() {
-      return this[isSelected$1];
-    }
-    set isSelected(value) {
-      super.isSelected = value;
-    }
-    static ['_#new#tearOff'](opts) {
-      let id = opts && 'id' in opts ? opts.id : null;
-      let label = opts && 'label' in opts ? opts.label : null;
-      let isSelected = opts && 'isSelected' in opts ? opts.isSelected : false;
-      return new tag.TagData.new({id: id, label: label, isSelected: isSelected});
-    }
-    copyWith(opts) {
-      let t3, t3$, t3$0;
-      let id = opts && 'id' in opts ? opts.id : null;
-      let label = opts && 'label' in opts ? opts.label : null;
-      let isSelected = opts && 'isSelected' in opts ? opts.isSelected : null;
-      return new tag.TagData.new({id: (t3 = id, t3 == null ? this.id : t3), label: (t3$ = label, t3$ == null ? this.label : t3$), isSelected: (t3$0 = isSelected, t3$0 == null ? this.isSelected : t3$0)});
-    }
-    _equals(other) {
-      if (other == null) return false;
-      return this === other || tag.TagData.is(other) && this[$runtimeType]._equals(other[$runtimeType]) && this.id === other.id && this.label === other.label && this.isSelected === other.isSelected;
-    }
-    get hashCode() {
-      return (this.id[$hashCode] ^ this.label[$hashCode] ^ this.isSelected[$hashCode]) >>> 0;
-    }
-    toString() {
-      return "TagData(id: " + this.id + ", label: " + this.label + ", isSelected: " + dart.str(this.isSelected) + ")";
-    }
-  };
-  (tag.TagData.new = function(opts) {
-    let id = opts && 'id' in opts ? opts.id : null;
-    let label = opts && 'label' in opts ? opts.label : null;
-    let isSelected = opts && 'isSelected' in opts ? opts.isSelected : false;
-    this[id$0] = id;
-    this[label$0] = label;
-    this[isSelected$1] = isSelected;
-    ;
-  }).prototype = tag.TagData.prototype;
-  dart.addTypeTests(tag.TagData);
-  dart.addTypeCaches(tag.TagData);
-  dart.setMethodSignature(tag.TagData, () => ({
-    __proto__: dart.getMethods(tag.TagData.__proto__),
-    copyWith: dart.fnType(tag.TagData, [], {id: dart.nullable(core.String), isSelected: dart.nullable(core.bool), label: dart.nullable(core.String)}, {})
-  }));
-  dart.setLibraryUri(tag.TagData, I[13]);
-  dart.setFieldSignature(tag.TagData, () => ({
-    __proto__: dart.getFields(tag.TagData.__proto__),
-    id: dart.finalFieldType(core.String),
-    label: dart.finalFieldType(core.String),
-    isSelected: dart.finalFieldType(core.bool)
-  }));
-  dart.defineExtensionMethods(tag.TagData, ['_equals', 'toString']);
-  dart.defineExtensionAccessors(tag.TagData, ['hashCode']);
-  var height$2 = dart.privateName(tag_item, "TagItem.height");
-  var onTap$1 = dart.privateName(tag_item, "TagItem.onTap");
-  var tag$ = dart.privateName(tag_item, "TagItem.tag");
-  var isCompact$3 = dart.privateName(tag_item, "TagItem.isCompact");
-  tag_item.TagItem = class TagItem extends framework.StatelessWidget {
+  var height$2 = dart.privateName(editable_tag_item, "EditableTagItem.height");
+  var onTap$1 = dart.privateName(editable_tag_item, "EditableTagItem.onTap");
+  var onRename$ = dart.privateName(editable_tag_item, "EditableTagItem.onRename");
+  var tag$0 = dart.privateName(editable_tag_item, "EditableTagItem.tag");
+  var isCompact$3 = dart.privateName(editable_tag_item, "EditableTagItem.isCompact");
+  editable_tag_item.EditableTagItem = class EditableTagItem extends framework.StatefulWidget {
     get height() {
       return this[height$2];
     }
@@ -2618,8 +3042,14 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     set onTap(value) {
       super.onTap = value;
     }
+    get onRename() {
+      return this[onRename$];
+    }
+    set onRename(value) {
+      super.onRename = value;
+    }
     get tag() {
-      return this[tag$];
+      return this[tag$0];
     }
     set tag(value) {
       super.tag = value;
@@ -2634,45 +3064,241 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       let key = opts && 'key' in opts ? opts.key : null;
       let height = opts && 'height' in opts ? opts.height : null;
       let onTap = opts && 'onTap' in opts ? opts.onTap : null;
+      let onRename = opts && 'onRename' in opts ? opts.onRename : null;
       let tag = opts && 'tag' in opts ? opts.tag : null;
       let isCompact = opts && 'isCompact' in opts ? opts.isCompact : false;
-      return new tag_item.TagItem.new({key: key, height: height, onTap: onTap, tag: tag, isCompact: isCompact});
+      return new editable_tag_item.EditableTagItem.new({key: key, height: height, onTap: onTap, onRename: onRename, tag: tag, isCompact: isCompact});
     }
-    build(context) {
-      let theme = theme$.Theme.of(context);
-      let isSelected = this.tag.isSelected;
-      let radius = this.isCompact ? 12 * 0.8 : 12;
-      let fontSize = layout.AppLayout.getFontSize(context, {baseSize: this.isCompact ? 12 : 14});
-      let borderWidth = isSelected ? this.isCompact ? 1.2 : 1.5 : this.isCompact ? 0.8 : 1;
-      return new basic.Semantics.new({label: this.tag.label, selected: isSelected, button: true, child: new gesture_detector.GestureDetector.new({onTap: this.onTap, child: new container.Container.new({height: this.height, decoration: new box_decoration.BoxDecoration.new({color: isSelected ? theme.colorScheme.primary.withOpacity(0.15) : theme.colorScheme.primary.withOpacity(0.05), borderRadius: new border_radius.BorderRadius.circular(radius), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.05), blurRadius: 2, offset: C[14] || CT.C14})]), border: box_border.Border.all({color: isSelected ? theme.colorScheme.primary.withOpacity(0.5) : theme.colorScheme.primary.withOpacity(0.15), width: borderWidth})}), child: new material.Material.new({color: colors.Colors.transparent, child: new ink_well.InkWell.new({borderRadius: new border_radius.BorderRadius.circular(radius), onTap: this.onTap, splashColor: theme.colorScheme.primary.withOpacity(0.15), highlightColor: theme.colorScheme.primary.withOpacity(0.1), child: new basic.RotatedBox.new({quarterTurns: 3, child: new basic.Center.new({child: new text.Text.new(this.tag.label, {style: new text_style.TextStyle.new({color: isSelected ? theme.colorScheme.primary : theme.colorScheme.primary.withOpacity(0.8), fontSize: fontSize, fontWeight: isSelected ? ui.FontWeight.bold : ui.FontWeight.normal})})})})})})})})});
+    createState() {
+      return new editable_tag_item._EditableTagItemState.new();
     }
   };
-  (tag_item.TagItem.new = function(opts) {
+  (editable_tag_item.EditableTagItem.new = function(opts) {
     let key = opts && 'key' in opts ? opts.key : null;
     let height = opts && 'height' in opts ? opts.height : null;
     let onTap = opts && 'onTap' in opts ? opts.onTap : null;
+    let onRename = opts && 'onRename' in opts ? opts.onRename : null;
     let tag = opts && 'tag' in opts ? opts.tag : null;
     let isCompact = opts && 'isCompact' in opts ? opts.isCompact : false;
     this[height$2] = height;
     this[onTap$1] = onTap;
-    this[tag$] = tag;
+    this[onRename$] = onRename;
+    this[tag$0] = tag;
     this[isCompact$3] = isCompact;
-    tag_item.TagItem.__proto__.new.call(this, {key: key});
+    editable_tag_item.EditableTagItem.__proto__.new.call(this, {key: key});
     ;
-  }).prototype = tag_item.TagItem.prototype;
-  dart.addTypeTests(tag_item.TagItem);
-  dart.addTypeCaches(tag_item.TagItem);
-  dart.setMethodSignature(tag_item.TagItem, () => ({
-    __proto__: dart.getMethods(tag_item.TagItem.__proto__),
-    build: dart.fnType(framework.Widget, [framework.BuildContext])
+  }).prototype = editable_tag_item.EditableTagItem.prototype;
+  dart.addTypeTests(editable_tag_item.EditableTagItem);
+  dart.addTypeCaches(editable_tag_item.EditableTagItem);
+  dart.setMethodSignature(editable_tag_item.EditableTagItem, () => ({
+    __proto__: dart.getMethods(editable_tag_item.EditableTagItem.__proto__),
+    createState: dart.fnType(framework.State$(editable_tag_item.EditableTagItem), [])
   }));
-  dart.setLibraryUri(tag_item.TagItem, I[14]);
-  dart.setFieldSignature(tag_item.TagItem, () => ({
-    __proto__: dart.getFields(tag_item.TagItem.__proto__),
+  dart.setLibraryUri(editable_tag_item.EditableTagItem, I[15]);
+  dart.setFieldSignature(editable_tag_item.EditableTagItem, () => ({
+    __proto__: dart.getFields(editable_tag_item.EditableTagItem.__proto__),
     height: dart.finalFieldType(core.double),
     onTap: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
-    tag: dart.finalFieldType(tag.TagData),
+    onRename: dart.finalFieldType(dart.fnType(dart.dynamic, [core.String])),
+    tag: dart.finalFieldType(tag$.TagData),
     isCompact: dart.finalFieldType(core.bool)
+  }));
+  var _isEditing = dart.privateName(editable_tag_item, "_isEditing");
+  var ___EditableTagItemState__textController = dart.privateName(editable_tag_item, "_#_EditableTagItemState#_textController");
+  var _focusNode = dart.privateName(editable_tag_item, "_focusNode");
+  var _textController = dart.privateName(editable_tag_item, "_textController");
+  var _onFocusChange = dart.privateName(editable_tag_item, "_onFocusChange");
+  var _saveChanges = dart.privateName(editable_tag_item, "_saveChanges");
+  var _startEditing = dart.privateName(editable_tag_item, "_startEditing");
+  var _buildEditingMode = dart.privateName(editable_tag_item, "_buildEditingMode");
+  var _buildNormalMode = dart.privateName(editable_tag_item, "_buildNormalMode");
+  var _buildTagItem = dart.privateName(editable_tag_item, "_buildTagItem");
+  editable_tag_item._EditableTagItemState = class _EditableTagItemState extends framework.State$(editable_tag_item.EditableTagItem) {
+    get [_textController]() {
+      let t5;
+      t5 = this[___EditableTagItemState__textController];
+      return t5 == null ? dart.throw(new _internal.LateError.fieldNI("_textController")) : t5;
+    }
+    set [_textController](_textController$35param) {
+      this[___EditableTagItemState__textController] = _textController$35param;
+    }
+    initState() {
+      super.initState();
+      this[_textController] = new editable_text.TextEditingController.new({text: this.widget.tag.label});
+      this[_focusNode].addListener(dart.bind(this, _onFocusChange));
+    }
+    dispose() {
+      this[_textController].dispose();
+      this[_focusNode].removeListener(dart.bind(this, _onFocusChange));
+      this[_focusNode].dispose();
+      super.dispose();
+    }
+    [_onFocusChange]() {
+      if (!this[_focusNode].hasFocus && this[_isEditing]) {
+        this[_saveChanges]();
+      }
+    }
+    [_saveChanges]() {
+      let t6, t5;
+      let newLabel = this[_textController].text[$trim]();
+      if (newLabel[$isNotEmpty] && newLabel !== this.widget.tag.label) {
+        t5 = this.widget;
+        t6 = newLabel;
+        t5.onRename(t6);
+      }
+      this.setState(dart.fn(() => {
+        this[_isEditing] = false;
+      }, T.VoidTovoid()));
+    }
+    [_startEditing]() {
+      this.setState(dart.fn(() => {
+        this[_isEditing] = true;
+        this[_textController].text = this.widget.tag.label;
+      }, T.VoidTovoid()));
+      T.FutureOfvoid().microtask(dart.fn(() => this[_focusNode].requestFocus(), T.VoidTovoid()));
+    }
+    build(context) {
+      let theme = theme$.Theme.of(context);
+      let isSelected = this.widget.tag.isSelected;
+      let radius = this.widget.isCompact ? 12 * 0.8 : 12;
+      let fontSize = layout.AppLayout.getFontSize(context, {baseSize: this.widget.isCompact ? 12 : 14});
+      let borderWidth = isSelected ? this.widget.isCompact ? 1.2 : 1.5 : this.widget.isCompact ? 0.8 : 1;
+      if (this[_isEditing]) {
+        return this[_buildEditingMode](theme, radius, fontSize, borderWidth);
+      } else {
+        return this[_buildNormalMode](theme, isSelected, radius, fontSize, borderWidth);
+      }
+    }
+    [_buildEditingMode](theme, radius, fontSize, borderWidth) {
+      return new container.Container.new({height: this.widget.height, decoration: new box_decoration.BoxDecoration.new({color: theme.colorScheme.primary.withOpacity(0.2), borderRadius: new border_radius.BorderRadius.circular(radius), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.05), blurRadius: 2, offset: C[14] || CT.C14})]), border: box_border.Border.all({color: theme.colorScheme.primary.withOpacity(0.6), width: borderWidth + 0.5})}), child: new material.Material.new({color: colors.Colors.transparent, child: new basic.Padding.new({padding: C[49] || CT.C49, child: new basic.RotatedBox.new({quarterTurns: 3, child: new basic.Column.new({mainAxisSize: flex.MainAxisSize.min, children: (() => {
+                  let t5 = T.JSArrayOfWidget().of([]);
+                  if (this.widget.tag.label.length > 7) t5.push(new basic.Padding.new({padding: C[54] || CT.C54, child: new text.Text.new(this.widget.tag.label, {style: new text_style.TextStyle.new({color: theme.colorScheme.primary.withOpacity(0.8), fontSize: fontSize * 0.8, fontStyle: ui.FontStyle.italic}), textAlign: ui.TextAlign.center})}));
+                  t5.push(new text_field.TextField.new({controller: this[_textController], focusNode: this[_focusNode], style: new text_style.TextStyle.new({color: theme.colorScheme.primary, fontSize: fontSize, fontWeight: ui.FontWeight.bold}), textAlign: ui.TextAlign.center, decoration: new input_decorator.InputDecoration.new({border: input_border.InputBorder.none, contentPadding: edge_insets.EdgeInsets.zero, isDense: true, suffix: this[_textController].text.length > 7 ? new text.Text.new("(" + dart.str(this[_textController].text.length) + ")", {style: new text_style.TextStyle.new({color: colors.Colors.red, fontSize: fontSize * 0.8})}) : null}), onSubmitted: dart.fn(_ => this[_saveChanges](), T.StringTovoid()), onChanged: dart.fn(text => {
+                      this.setState(dart.fn(() => {
+                      }, T.VoidTovoid()));
+                    }, T.StringTovoid())}));
+                  return t5;
+                })()})})})})});
+    }
+    [_buildNormalMode](theme, isSelected, radius, fontSize, borderWidth) {
+      return new (T.DraggableOfTagData()).new({data: this.widget.tag, feedback: new material.Material.new({elevation: 4, borderRadius: new border_radius.BorderRadius.circular(radius), child: new container.Container.new({padding: C[47] || CT.C47, decoration: new box_decoration.BoxDecoration.new({color: theme.colorScheme.primary.withOpacity(0.9), borderRadius: new border_radius.BorderRadius.circular(radius)}), child: new text.Text.new(text_utils.TextUtils.truncateWithEllipsis(this.widget.tag.label, 7), {style: new text_style.TextStyle.new({color: colors.Colors.white, fontSize: fontSize, fontWeight: ui.FontWeight.bold})})})}), childWhenDragging: new basic.Opacity.new({opacity: 0.5, child: this[_buildTagItem](theme, isSelected, radius, fontSize, borderWidth)}), child: new gesture_detector.GestureDetector.new({onDoubleTap: dart.bind(this, _startEditing), child: this[_buildTagItem](theme, isSelected, radius, fontSize, borderWidth)})});
+    }
+    [_buildTagItem](theme, isSelected, radius, fontSize, borderWidth) {
+      return new basic.Semantics.new({label: this.widget.tag.label, selected: isSelected, button: true, child: new gesture_detector.GestureDetector.new({onTap: this.widget.onTap, child: new container.Container.new({height: this.widget.height, decoration: new box_decoration.BoxDecoration.new({color: isSelected ? theme.colorScheme.primary.withOpacity(0.15) : theme.colorScheme.primary.withOpacity(0.05), borderRadius: new border_radius.BorderRadius.circular(radius), boxShadow: T.JSArrayOfBoxShadow().of([new box_shadow.BoxShadow.new({color: colors.Colors.black.withOpacity(0.05), blurRadius: 2, offset: C[14] || CT.C14})]), border: box_border.Border.all({color: isSelected ? theme.colorScheme.primary.withOpacity(0.5) : theme.colorScheme.primary.withOpacity(0.15), width: borderWidth})}), child: new material.Material.new({color: colors.Colors.transparent, child: new ink_well.InkWell.new({borderRadius: new border_radius.BorderRadius.circular(radius), onTap: this.widget.onTap, splashColor: theme.colorScheme.primary.withOpacity(0.15), highlightColor: theme.colorScheme.primary.withOpacity(0.1), child: new basic.RotatedBox.new({quarterTurns: 3, child: new basic.Center.new({child: new text.Text.new(text_utils.TextUtils.truncateWithEllipsis(this.widget.tag.label, 7), {style: new text_style.TextStyle.new({color: isSelected ? theme.colorScheme.primary : theme.colorScheme.primary.withOpacity(0.8), fontSize: fontSize, fontWeight: isSelected ? ui.FontWeight.bold : ui.FontWeight.normal})})})})})})})})});
+    }
+    static ['_#new#tearOff']() {
+      return new editable_tag_item._EditableTagItemState.new();
+    }
+  };
+  (editable_tag_item._EditableTagItemState.new = function() {
+    this[_isEditing] = false;
+    this[___EditableTagItemState__textController] = null;
+    this[_focusNode] = new focus_manager.FocusNode.new();
+    editable_tag_item._EditableTagItemState.__proto__.new.call(this);
+    ;
+  }).prototype = editable_tag_item._EditableTagItemState.prototype;
+  dart.addTypeTests(editable_tag_item._EditableTagItemState);
+  dart.addTypeCaches(editable_tag_item._EditableTagItemState);
+  dart.setMethodSignature(editable_tag_item._EditableTagItemState, () => ({
+    __proto__: dart.getMethods(editable_tag_item._EditableTagItemState.__proto__),
+    [_onFocusChange]: dart.fnType(dart.void, []),
+    [_saveChanges]: dart.fnType(dart.void, []),
+    [_startEditing]: dart.fnType(dart.void, []),
+    build: dart.fnType(framework.Widget, [framework.BuildContext]),
+    [_buildEditingMode]: dart.fnType(framework.Widget, [theme_data.ThemeData, core.double, core.double, core.double]),
+    [_buildNormalMode]: dart.fnType(framework.Widget, [theme_data.ThemeData, core.bool, core.double, core.double, core.double]),
+    [_buildTagItem]: dart.fnType(framework.Widget, [theme_data.ThemeData, core.bool, core.double, core.double, core.double])
+  }));
+  dart.setGetterSignature(editable_tag_item._EditableTagItemState, () => ({
+    __proto__: dart.getGetters(editable_tag_item._EditableTagItemState.__proto__),
+    [_textController]: editable_text.TextEditingController
+  }));
+  dart.setSetterSignature(editable_tag_item._EditableTagItemState, () => ({
+    __proto__: dart.getSetters(editable_tag_item._EditableTagItemState.__proto__),
+    [_textController]: editable_text.TextEditingController
+  }));
+  dart.setLibraryUri(editable_tag_item._EditableTagItemState, I[15]);
+  dart.setFieldSignature(editable_tag_item._EditableTagItemState, () => ({
+    __proto__: dart.getFields(editable_tag_item._EditableTagItemState.__proto__),
+    [_isEditing]: dart.fieldType(core.bool),
+    [___EditableTagItemState__textController]: dart.fieldType(dart.nullable(editable_text.TextEditingController)),
+    [_focusNode]: dart.finalFieldType(focus_manager.FocusNode)
+  }));
+  var tags$ = dart.privateName(tag_list, "TagList.tags");
+  var onRemoveTag$ = dart.privateName(tag_list, "TagList.onRemoveTag");
+  var isSmall$ = dart.privateName(tag_list, "TagList.isSmall");
+  var isScrollable$ = dart.privateName(tag_list, "TagList.isScrollable");
+  tag_list.TagList = class TagList extends framework.StatelessWidget {
+    get tags() {
+      return this[tags$];
+    }
+    set tags(value) {
+      super.tags = value;
+    }
+    get onRemoveTag() {
+      return this[onRemoveTag$];
+    }
+    set onRemoveTag(value) {
+      super.onRemoveTag = value;
+    }
+    get isSmall() {
+      return this[isSmall$];
+    }
+    set isSmall(value) {
+      super.isSmall = value;
+    }
+    get isScrollable() {
+      return this[isScrollable$];
+    }
+    set isScrollable(value) {
+      super.isScrollable = value;
+    }
+    static ['_#new#tearOff'](opts) {
+      let key = opts && 'key' in opts ? opts.key : null;
+      let tags = opts && 'tags' in opts ? opts.tags : null;
+      let onRemoveTag = opts && 'onRemoveTag' in opts ? opts.onRemoveTag : null;
+      let isSmall = opts && 'isSmall' in opts ? opts.isSmall : false;
+      let isScrollable = opts && 'isScrollable' in opts ? opts.isScrollable : false;
+      return new tag_list.TagList.new({key: key, tags: tags, onRemoveTag: onRemoveTag, isSmall: isSmall, isScrollable: isScrollable});
+    }
+    build(context) {
+      if (this.tags[$isEmpty]) {
+        return C[55] || CT.C55;
+      }
+      let tagChips = this.tags[$map](tag_chip.TagChip, dart.fn(tag => new tag_chip.TagChip.new({tag: tag, onRemove: this.onRemoveTag != null ? dart.fn(() => dart.nullCheck(this.onRemoveTag)(tag), T.VoidTovoid()) : null, isSmall: this.isSmall}), T.TagDataToTagChip()))[$toList]();
+      if (this.isScrollable) {
+        return new basic.SizedBox.new({height: this.isSmall ? 28 : 36, child: new scroll_view.ListView.new({scrollDirection: basic_types.Axis.horizontal, children: tagChips})});
+      } else {
+        return new basic.Wrap.new({children: tagChips});
+      }
+    }
+  };
+  (tag_list.TagList.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let tags = opts && 'tags' in opts ? opts.tags : null;
+    let onRemoveTag = opts && 'onRemoveTag' in opts ? opts.onRemoveTag : null;
+    let isSmall = opts && 'isSmall' in opts ? opts.isSmall : false;
+    let isScrollable = opts && 'isScrollable' in opts ? opts.isScrollable : false;
+    this[tags$] = tags;
+    this[onRemoveTag$] = onRemoveTag;
+    this[isSmall$] = isSmall;
+    this[isScrollable$] = isScrollable;
+    tag_list.TagList.__proto__.new.call(this, {key: key});
+    ;
+  }).prototype = tag_list.TagList.prototype;
+  dart.addTypeTests(tag_list.TagList);
+  dart.addTypeCaches(tag_list.TagList);
+  dart.setMethodSignature(tag_list.TagList, () => ({
+    __proto__: dart.getMethods(tag_list.TagList.__proto__),
+    build: dart.fnType(framework.Widget, [framework.BuildContext])
+  }));
+  dart.setLibraryUri(tag_list.TagList, I[16]);
+  dart.setFieldSignature(tag_list.TagList, () => ({
+    __proto__: dart.getFields(tag_list.TagList.__proto__),
+    tags: dart.finalFieldType(core.List$(tag$.TagData)),
+    onRemoveTag: dart.finalFieldType(dart.nullable(dart.fnType(dart.dynamic, [tag$.TagData]))),
+    isSmall: dart.finalFieldType(core.bool),
+    isScrollable: dart.finalFieldType(core.bool)
   }));
   var icon$0 = dart.privateName(action_button, "ActionButton.icon");
   var onPressed$ = dart.privateName(action_button, "ActionButton.onPressed");
@@ -2721,8 +3347,8 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
       return new action_button.ActionButton.new({key: key, icon: icon, onPressed: onPressed, iconSize: iconSize, tooltip: tooltip, color: color});
     }
     build(context) {
-      let t3;
-      let buttonColor = (t3 = this.color, t3 == null ? theme$.Theme.of(context).brightness === ui.Brightness.light ? colors.Colors.grey.shade700 : colors.Colors.grey.shade300 : t3);
+      let t6;
+      let buttonColor = (t6 = this.color, t6 == null ? theme$.Theme.of(context).brightness === ui.Brightness.light ? colors.Colors.grey.shade700 : colors.Colors.grey.shade300 : t6);
       return this.tooltip != null ? new tooltip$.Tooltip.new({message: dart.nullCheck(this.tooltip), child: this[_buildButton](buttonColor)}) : this[_buildButton](buttonColor);
     }
     [_buildButton](buttonColor) {
@@ -2751,7 +3377,7 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     build: dart.fnType(framework.Widget, [framework.BuildContext]),
     [_buildButton]: dart.fnType(framework.Widget, [ui.Color])
   }));
-  dart.setLibraryUri(action_button.ActionButton, I[15]);
+  dart.setLibraryUri(action_button.ActionButton, I[17]);
   dart.setFieldSignature(action_button.ActionButton, () => ({
     __proto__: dart.getFields(action_button.ActionButton.__proto__),
     icon: dart.finalFieldType(icon_data.IconData),
@@ -2759,6 +3385,91 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     iconSize: dart.finalFieldType(core.double),
     tooltip: dart.finalFieldType(dart.nullable(core.String)),
     color: dart.finalFieldType(dart.nullable(ui.Color))
+  }));
+  text_utils.TextUtils = class TextUtils extends core.Object {
+    static truncateWithEllipsis(text, maxLength) {
+      if (text.length <= maxLength) {
+        return text;
+      }
+      return text[$substring](0, maxLength) + "...";
+    }
+    static ['_#new#tearOff']() {
+      return new text_utils.TextUtils.new();
+    }
+  };
+  (text_utils.TextUtils.new = function() {
+    ;
+  }).prototype = text_utils.TextUtils.prototype;
+  dart.addTypeTests(text_utils.TextUtils);
+  dart.addTypeCaches(text_utils.TextUtils);
+  dart.setStaticMethodSignature(text_utils.TextUtils, () => ['truncateWithEllipsis']);
+  dart.setLibraryUri(text_utils.TextUtils, I[18]);
+  var tag$1 = dart.privateName(tag_chip, "TagChip.tag");
+  var onRemove$ = dart.privateName(tag_chip, "TagChip.onRemove");
+  var isSmall$0 = dart.privateName(tag_chip, "TagChip.isSmall");
+  tag_chip.TagChip = class TagChip extends framework.StatelessWidget {
+    get tag() {
+      return this[tag$1];
+    }
+    set tag(value) {
+      super.tag = value;
+    }
+    get onRemove() {
+      return this[onRemove$];
+    }
+    set onRemove(value) {
+      super.onRemove = value;
+    }
+    get isSmall() {
+      return this[isSmall$0];
+    }
+    set isSmall(value) {
+      super.isSmall = value;
+    }
+    static ['_#new#tearOff'](opts) {
+      let key = opts && 'key' in opts ? opts.key : null;
+      let tag = opts && 'tag' in opts ? opts.tag : null;
+      let onRemove = opts && 'onRemove' in opts ? opts.onRemove : null;
+      let isSmall = opts && 'isSmall' in opts ? opts.isSmall : false;
+      return new tag_chip.TagChip.new({key: key, tag: tag, onRemove: onRemove, isSmall: isSmall});
+    }
+    build(context) {
+      let theme = theme$.Theme.of(context);
+      let tagColor = theme.colorScheme.primary;
+      let fontSize = this.isSmall ? 10 : 12;
+      let horizontalPadding = this.isSmall ? 6 : 8;
+      let verticalPadding = this.isSmall ? 4 : 6;
+      let iconSize = this.isSmall ? 14 : 16;
+      return new container.Container.new({margin: C[56] || CT.C56, child: new material.Material.new({color: colors.Colors.transparent, child: new ink_well.InkWell.new({borderRadius: new border_radius.BorderRadius.circular(16), onTap: this.onRemove, child: new container.Container.new({padding: new edge_insets.EdgeInsets.symmetric({horizontal: horizontalPadding, vertical: verticalPadding}), decoration: new box_decoration.BoxDecoration.new({color: tagColor.withOpacity(0.15), borderRadius: new border_radius.BorderRadius.circular(16), border: box_border.Border.all({color: tagColor.withOpacity(0.3), width: 1})}), child: new basic.Row.new({mainAxisSize: flex.MainAxisSize.min, children: (() => {
+                  let t6 = T.JSArrayOfWidget().of([new text.Text.new(text_utils.TextUtils.truncateWithEllipsis(this.tag.label, 7), {style: new text_style.TextStyle.new({color: tagColor.withOpacity(0.8), fontSize: fontSize, fontWeight: ui.FontWeight.w500})})]);
+                  if (this.onRemove != null) t6[$addAll](T.JSArrayOfWidget().of([C[46] || CT.C46, new gesture_detector.GestureDetector.new({onTap: this.onRemove, child: new icon$.Icon.new(icons.Icons.close, {size: iconSize, color: tagColor.withOpacity(0.6)})})]));
+                  return t6;
+                })()})})})})});
+    }
+  };
+  (tag_chip.TagChip.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let tag = opts && 'tag' in opts ? opts.tag : null;
+    let onRemove = opts && 'onRemove' in opts ? opts.onRemove : null;
+    let isSmall = opts && 'isSmall' in opts ? opts.isSmall : false;
+    this[tag$1] = tag;
+    this[onRemove$] = onRemove;
+    this[isSmall$0] = isSmall;
+    tag_chip.TagChip.__proto__.new.call(this, {key: key});
+    ;
+  }).prototype = tag_chip.TagChip.prototype;
+  dart.addTypeTests(tag_chip.TagChip);
+  dart.addTypeCaches(tag_chip.TagChip);
+  dart.setMethodSignature(tag_chip.TagChip, () => ({
+    __proto__: dart.getMethods(tag_chip.TagChip.__proto__),
+    build: dart.fnType(framework.Widget, [framework.BuildContext])
+  }));
+  dart.setLibraryUri(tag_chip.TagChip, I[19]);
+  dart.setFieldSignature(tag_chip.TagChip, () => ({
+    __proto__: dart.getFields(tag_chip.TagChip.__proto__),
+    tag: dart.finalFieldType(tag$.TagData),
+    onRemove: dart.finalFieldType(dart.nullable(dart.fnType(dart.void, []))),
+    isSmall: dart.finalFieldType(core.bool)
   }));
   dart.trackLibraries("zapp_user_main", {
     "file:///zapp/project/.zapp_entry.dart": $46zapp_entry,
@@ -2773,15 +3484,19 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     "file:///zapp/project/lib/widgets/tag/tag_sidebar.dart": tag_sidebar,
     "file:///zapp/project/lib/widgets/bottom_bar/bottom_action_bar.dart": bottom_action_bar,
     "file:///zapp/project/lib/services/note_service.dart": note_service,
+    "file:///zapp/project/lib/services/tag_service.dart": tag_service,
     "file:///zapp/project/lib/models/note.dart": note$,
+    "file:///zapp/project/lib/models/tag.dart": tag$,
     "file:///zapp/project/lib/widgets/category/category_button.dart": category_button,
     "file:///zapp/project/lib/widgets/note/size_selector.dart": size_selector,
     "file:///zapp/project/lib/widgets/note/note_input_area.dart": note_input_area,
-    "file:///zapp/project/lib/models/tag.dart": tag,
-    "file:///zapp/project/lib/widgets/tag/tag_item.dart": tag_item,
-    "file:///zapp/project/lib/widgets/note/action_button.dart": action_button
+    "file:///zapp/project/lib/widgets/tag/editable_tag_item.dart": editable_tag_item,
+    "file:///zapp/project/lib/widgets/tag/tag_list.dart": tag_list,
+    "file:///zapp/project/lib/widgets/note/action_button.dart": action_button,
+    "file:///zapp/project/lib/utils/text_utils.dart": text_utils,
+    "file:///zapp/project/lib/widgets/tag/tag_chip.dart": tag_chip
   }, {
-  }, '{"version":3,"sourceRoot":"","sources":["/zapp/project/.zapp_entry.dart","/zapp/project/lib/main.dart","/zapp/project/.dart_tool/dartpad/web_plugin_registrant.dart","/zapp/project/lib/app.dart","/zapp/project/lib/screens/note_entry_screen.dart","/zapp/project/lib/config/theme/app_theme.dart","/zapp/project/lib/config/constants/layout.dart","/zapp/project/lib/widgets/category/category_sidebar.dart","/zapp/project/lib/widgets/note/note_content.dart","/zapp/project/lib/widgets/tag/tag_sidebar.dart","/zapp/project/lib/widgets/bottom_bar/bottom_action_bar.dart","/zapp/project/lib/services/note_service.dart","/zapp/project/lib/models/note.dart","/zapp/project/lib/widgets/category/category_button.dart","/zapp/project/lib/widgets/note/size_selector.dart","/zapp/project/lib/widgets/note/note_input_area.dart","/zapp/project/lib/models/tag.dart","/zapp/project/lib/widgets/tag/tag_item.dart","/zapp/project/lib/widgets/note/action_button.dart"],"names":[],"mappings":"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","file":"main.js"}');
+  }, '{"version":3,"sourceRoot":"","sources":["/zapp/project/.zapp_entry.dart","/zapp/project/lib/main.dart","/zapp/project/.dart_tool/dartpad/web_plugin_registrant.dart","/zapp/project/lib/app.dart","/zapp/project/lib/screens/note_entry_screen.dart","/zapp/project/lib/config/theme/app_theme.dart","/zapp/project/lib/config/constants/layout.dart","/zapp/project/lib/widgets/category/category_sidebar.dart","/zapp/project/lib/widgets/note/note_content.dart","/zapp/project/lib/widgets/tag/tag_sidebar.dart","/zapp/project/lib/widgets/bottom_bar/bottom_action_bar.dart","/zapp/project/lib/services/note_service.dart","/zapp/project/lib/services/tag_service.dart","/zapp/project/lib/models/note.dart","/zapp/project/lib/models/tag.dart","/zapp/project/lib/widgets/category/category_button.dart","/zapp/project/lib/widgets/note/size_selector.dart","/zapp/project/lib/widgets/note/note_input_area.dart","/zapp/project/lib/widgets/tag/editable_tag_item.dart","/zapp/project/lib/widgets/tag/tag_list.dart","/zapp/project/lib/widgets/note/action_button.dart","/zapp/project/lib/utils/text_utils.dart","/zapp/project/lib/widgets/tag/tag_chip.dart"],"names":[],"mappings":"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","file":"main.js"}');
   // Exports:
   return {
     zapp__project__$46zapp_entry: $46zapp_entry,
@@ -2796,13 +3511,17 @@ define('zapp_user_main', ['dart_sdk', 'flutter_sdk'], (function load__zapp_user_
     zapp__project__lib__widgets__tag__tag_sidebar: tag_sidebar,
     zapp__project__lib__widgets__bottom_bar__bottom_action_bar: bottom_action_bar,
     zapp__project__lib__services__note_service: note_service,
+    zapp__project__lib__services__tag_service: tag_service,
     zapp__project__lib__models__note: note$,
+    zapp__project__lib__models__tag: tag$,
     zapp__project__lib__widgets__category__category_button: category_button,
     zapp__project__lib__widgets__note__size_selector: size_selector,
     zapp__project__lib__widgets__note__note_input_area: note_input_area,
-    zapp__project__lib__models__tag: tag,
-    zapp__project__lib__widgets__tag__tag_item: tag_item,
-    zapp__project__lib__widgets__note__action_button: action_button
+    zapp__project__lib__widgets__tag__editable_tag_item: editable_tag_item,
+    zapp__project__lib__widgets__tag__tag_list: tag_list,
+    zapp__project__lib__widgets__note__action_button: action_button,
+    zapp__project__lib__utils__text_utils: text_utils,
+    zapp__project__lib__widgets__tag__tag_chip: tag_chip
   };
 }));
 

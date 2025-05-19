@@ -1,18 +1,23 @@
-// widgets/note/note_input_area.dart - Save button changed to Format button
+// widgets/note/note_input_area.dart
 
 import 'package:flutter/material.dart';
 import '../../config/constants/layout.dart';
+import '../../models/tag.dart';
+import '../tag/tag_list.dart';
 import 'action_button.dart';
 
 /// Note input area with text field and action buttons
 class NoteInputArea extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final List<TagData> appliedTags;
+  final Function(TagData)? onTagAdded;
+  final Function(TagData)? onTagRemoved;
   
   // Action callbacks
   final VoidCallback? onDelete;
   final VoidCallback? onUndo;
-  final VoidCallback? onFormat; // Changed from onSave to onFormat
+  final VoidCallback? onFormat;
   final VoidCallback? onCamera;
   final VoidCallback? onMic;
   final VoidCallback? onLink;
@@ -21,9 +26,12 @@ class NoteInputArea extends StatelessWidget {
     super.key,
     required this.controller,
     this.focusNode,
+    this.appliedTags = const [],
+    this.onTagAdded,
+    this.onTagRemoved,
     this.onDelete,
     this.onUndo,
-    this.onFormat, // Changed from onSave to onFormat
+    this.onFormat,
     this.onCamera,
     this.onMic,
     this.onLink,
@@ -40,88 +48,124 @@ class NoteInputArea extends StatelessWidget {
         ? const EdgeInsets.symmetric(horizontal: 12, vertical: 8)
         : const EdgeInsets.symmetric(horizontal: 16, vertical: 12);
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppLayout.spacingXS),
-      decoration: BoxDecoration(
-        color: theme.brightness == Brightness.light 
-            ? Colors.white 
-            : const Color(0xFF1E1E1E),
-        border: Border.all(color: theme.brightness == Brightness.light
-            ? Colors.grey.shade300
-            : Colors.grey.shade800),
-        borderRadius: BorderRadius.circular(AppLayout.buttonRadius),
-        // Add subtle shadow for depth
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+    // Create a DragTarget for tag dropping
+    return DragTarget<TagData>(
+      onAccept: (TagData tag) {
+        if (onTagAdded != null) {
+          onTagAdded!(tag);
+        }
+      },
+      // Change visual feedback when tag is being dragged over
+      onWillAccept: (TagData? tag) {
+        return tag != null && !appliedTags.contains(tag);
+      },
+      builder: (context, candidateItems, rejectedItems) {
+        // Add a subtle highlight effect when tag is hovering
+        final bool isHighlighted = candidateItems.isNotEmpty;
+        
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+            color: theme.brightness == Brightness.light 
+                ? isHighlighted ? Colors.blue.shade50 : Colors.white 
+                : isHighlighted ? const Color(0xFF1A2030) : const Color(0xFF1E1E1E),
+            border: Border.all(
+              color: isHighlighted
+                  ? theme.colorScheme.primary.withOpacity(0.5)
+                  : theme.brightness == Brightness.light
+                      ? Colors.grey.shade300
+                      : Colors.grey.shade800,
+            ),
+            borderRadius: BorderRadius.circular(AppLayout.buttonRadius),
+            // Add subtle shadow for depth
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // Top action bar with Format button instead of Save
-          TopActionBar(
-            height: actionBarHeight,
-            padding: padding,
-            iconSize: iconSize,
-            onDeletePressed: onDelete,
-            onUndoPressed: onUndo,
-            onFormatPressed: onFormat, // Changed from onSavePressed to onFormatPressed
-          ),
+          child: Column(
+            children: [
+              // Top action bar with Format button instead of Save
+              TopActionBar(
+                height: actionBarHeight,
+                padding: padding,
+                iconSize: iconSize,
+                onDeletePressed: onDelete,
+                onUndoPressed: onUndo,
+                onFormatPressed: onFormat,
+              ),
 
-          // Divider after top action bar
-          Divider(
-            height: 1, 
-            thickness: 1, 
-            color: theme.dividerTheme.color,
-          ),
+              // Divider after top action bar
+              Divider(
+                height: 1, 
+                thickness: 1, 
+                color: theme.dividerTheme.color,
+              ),
 
-          // Text input field
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: isCompact ? 5.0 : AppLayout.spacingS),
-              child: TextField(
-                controller: controller,
-                focusNode: focusNode,
-                decoration: InputDecoration(
-                  contentPadding: contentPadding,
-                  hintText: 'Input text',
-                  border: InputBorder.none,
-                  hintStyle: TextStyle(
-                    color: theme.brightness == Brightness.light
-                        ? Colors.grey.shade400
-                        : Colors.grey.shade600,
+              // Text input field
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(top: isCompact ? 5.0 : AppLayout.spacingS),
+                  child: TextField(
+                    controller: controller,
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      contentPadding: contentPadding,
+                      hintText: 'Input text',
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        color: theme.brightness == Brightness.light
+                            ? Colors.grey.shade400
+                            : Colors.grey.shade600,
+                      ),
+                    ),
+                    style: theme.textTheme.bodyLarge,
+                    maxLines: null,
+                    expands: true,
+                    textAlignVertical: TextAlignVertical.top,
+                    textCapitalization: TextCapitalization.sentences,
                   ),
                 ),
-                style: theme.textTheme.bodyLarge,
-                maxLines: null,
-                expands: true,
-                textAlignVertical: TextAlignVertical.top,
-                textCapitalization: TextCapitalization.sentences,
               ),
-            ),
-          ),
 
-          // Divider before bottom action bar
-          Divider(
-            height: 1, 
-            thickness: 1, 
-            color: theme.dividerTheme.color,
-          ),
+              // Display applied tags at the bottom left
+              if (appliedTags.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0, bottom: 8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: TagList(
+                      tags: appliedTags,
+                      onRemoveTag: onTagRemoved,
+                      isSmall: true,
+                      isScrollable: true,
+                    ),
+                  ),
+                ),
 
-          // Bottom action bar
-          BottomActionButtons(
-            height: actionBarHeight,
-            padding: padding,
-            iconSize: iconSize,
-            onCameraPressed: onCamera,
-            onMicPressed: onMic,
-            onLinkPressed: onLink,
+              // Divider before bottom action bar
+              Divider(
+                height: 1, 
+                thickness: 1, 
+                color: theme.dividerTheme.color,
+              ),
+
+              // Bottom action bar
+              BottomActionButtons(
+                height: actionBarHeight,
+                padding: padding,
+                iconSize: iconSize,
+                onCameraPressed: onCamera,
+                onMicPressed: onMic,
+                onLinkPressed: onLink,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -133,7 +177,7 @@ class TopActionBar extends StatelessWidget {
   final double iconSize;
   final VoidCallback? onDeletePressed;
   final VoidCallback? onUndoPressed;
-  final VoidCallback? onFormatPressed; // Changed from onSavePressed to onFormatPressed
+  final VoidCallback? onFormatPressed;
 
   const TopActionBar({
     super.key,
@@ -142,7 +186,7 @@ class TopActionBar extends StatelessWidget {
     required this.iconSize,
     this.onDeletePressed,
     this.onUndoPressed,
-    this.onFormatPressed, // Changed from onSavePressed to onFormatPressed
+    this.onFormatPressed,
   });
 
   @override
@@ -181,10 +225,10 @@ class TopActionBar extends StatelessWidget {
           
           // Format button (changed from Save button)
           ActionButton(
-            icon: Icons.format_align_left, // Changed icon to indicate text formatting
+            icon: Icons.format_align_left,
             onPressed: onFormatPressed,
             iconSize: iconSize,
-            tooltip: 'Format text', // Updated tooltip
+            tooltip: 'Format text',
           ),
           
           // Spacer for better balance

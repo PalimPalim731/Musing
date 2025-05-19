@@ -30,6 +30,43 @@ class TagItem extends StatelessWidget {
         ? (isCompact ? 1.2 : 1.5)
         : (isCompact ? 0.8 : 1.0);
 
+    // Wrap with Draggable widget
+    return Draggable<TagData>(
+      // The data that will be passed to the DragTarget
+      data: tag,
+      // What is displayed as the dragged item during drag
+      feedback: Material(
+        elevation: 4.0,
+        borderRadius: BorderRadius.circular(radius),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.primary.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(radius),
+          ),
+          child: Text(
+            tag.label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      // Reduce the opacity of the original widget during drag
+      childWhenDragging: Opacity(
+        opacity: 0.5,
+        child: _buildTagItem(context, theme, isSelected, radius, fontSize, borderWidth),
+      ),
+      // The actual widget displayed when not dragging
+      child: _buildTagItem(context, theme, isSelected, radius, fontSize, borderWidth),
+    );
+  }
+
+  // Extracted the original tag item widget to reduce code duplication
+  Widget _buildTagItem(BuildContext context, ThemeData theme, bool isSelected, 
+      double radius, double fontSize, double borderWidth) {
     return Semantics(
       label: tag.label,
       selected: isSelected,

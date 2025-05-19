@@ -1,7 +1,8 @@
-// widgets/note/note_content.dart - Update for Format button
+// widgets/note/note_content.dart
 
 import 'package:flutter/material.dart';
 import '../../config/constants/layout.dart';
+import '../../models/tag.dart';
 import 'size_selector.dart';
 import 'note_input_area.dart';
 
@@ -11,11 +12,14 @@ class NoteContent extends StatelessWidget {
   final Function(String) onSizeSelected;
   final TextEditingController noteController;
   final FocusNode? focusNode;
+  final List<TagData> appliedTags;
+  final Function(TagData)? onTagAdded;
+  final Function(TagData)? onTagRemoved;
   
   // Action callbacks
   final VoidCallback? onDelete;
   final VoidCallback? onUndo;
-  final VoidCallback? onFormat; // Changed from onSave to onFormat
+  final VoidCallback? onFormat;
   final VoidCallback? onCamera;
   final VoidCallback? onMic;
   final VoidCallback? onLink;
@@ -26,9 +30,12 @@ class NoteContent extends StatelessWidget {
     required this.onSizeSelected,
     required this.noteController,
     this.focusNode,
+    this.appliedTags = const [],
+    this.onTagAdded,
+    this.onTagRemoved,
     this.onDelete,
     this.onUndo,
-    this.onFormat, // Changed from onSave to onFormat
+    this.onFormat,
     this.onCamera,
     this.onMic,
     this.onLink,
@@ -51,9 +58,12 @@ class NoteContent extends StatelessWidget {
           child: NoteInputArea(
             controller: noteController,
             focusNode: focusNode,
+            appliedTags: appliedTags,
+            onTagAdded: onTagAdded,
+            onTagRemoved: onTagRemoved,
             onDelete: onDelete,
             onUndo: onUndo,
-            onFormat: onFormat, // Changed from onSave to onFormat
+            onFormat: onFormat,
             onCamera: onCamera,
             onMic: onMic,
             onLink: onLink,

@@ -1,4 +1,4 @@
-// screens/note_entry_screen.dart - Updated for Format button
+// screens/note_entry_screen.dart
 
 import 'package:flutter/material.dart';
 import '../config/constants/layout.dart';
@@ -7,7 +7,9 @@ import '../widgets/note/note_content.dart';
 import '../widgets/tag/tag_sidebar.dart';
 import '../widgets/bottom_bar/bottom_action_bar.dart';
 import '../services/note_service.dart';
+import '../services/tag_service.dart';
 import '../models/note.dart';
+import '../models/tag.dart';
 
 /// Main screen for note entry and management
 class NoteEntryScreen extends StatefulWidget {
@@ -25,8 +27,12 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
   // Selected tag IDs
   final List<String> _selectedTagIds = [];
   
-  // Note service for data operations
+  // Applied tags to the current note
+  final List<TagData> _appliedTags = [];
+  
+  // Services for data operations
   final NoteService _noteService = NoteService();
+  final TagService _tagService = TagService();
   
   // Controller for the note text input
   final TextEditingController _noteController = TextEditingController();
@@ -37,7 +43,28 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
   @override
   void initState() {
     super.initState();
-    // Any initialization code can go here
+    
+    // Listen to tag changes (like renames) to update applied tags
+    _tagService.tagsStream.listen((updatedTags) {
+      // If any applied tags have been renamed, update them
+      if (_appliedTags.isNotEmpty) {
+        setState(() {
+          // Update our applied tags with the latest tag data
+          for (int i = 0; i < _appliedTags.length; i++) {
+            final currentTag = _appliedTags[i];
+            final updatedTag = updatedTags.firstWhere(
+              (tag) => tag.id == currentTag.id,
+              orElse: () => currentTag, // Keep the old one if not found
+            );
+            
+            // Replace tag if it was updated
+            if (updatedTag.label != currentTag.label) {
+              _appliedTags[i] = updatedTag;
+            }
+          }
+        });
+      }
+    });
   }
   
   @override
@@ -87,9 +114,12 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
                           onSizeSelected: _selectSize,
                           noteController: _noteController,
                           focusNode: _noteFocusNode,
+                          appliedTags: _appliedTags,
+                          onTagAdded: _handleTagAdded,
+                          onTagRemoved: _handleTagRemoved,
                           onDelete: _handleDeleteNote,
                           onUndo: _handleUndoNote,
-                          onFormat: _handleFormatNote, // Changed from onSave to onFormat
+                          onFormat: _handleFormatNote,
                           onCamera: _handleCameraPressed,
                           onMic: _handleMicPressed,
                           onLink: _handleLinkPressed,
@@ -140,6 +170,7 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
     });
   }
   
+  // Handle tag selection in the sidebar
   void _handleTagSelected(String tagId, bool isSelected) {
     setState(() {
       if (isSelected) {
@@ -151,6 +182,35 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
       }
     });
     debugPrint('Selected tags: $_selectedTagIds');
+  }
+  
+  // Handle tag dropped onto the note
+  void _handleTagAdded(TagData tag) {
+    setState(() {
+      if (!_appliedTags.contains(tag)) {
+        _appliedTags.add(tag);
+        // Also add to selected tags if not already there
+        if (!_selectedTagIds.contains(tag.id)) {
+          _selectedTagIds.add(tag.id);
+        }
+      }
+    });
+    debugPrint('Tag added to note: ${tag.label}');
+  }
+  
+  // Find a TagData from the TagService by id
+  TagData? _findTagById(String id) {
+    return _tagService.getTagById(id);
+  }
+  
+  // Handle removal of tag from the note
+  void _handleTagRemoved(TagData tag) {
+    setState(() {
+      _appliedTags.removeWhere((t) => t.id == tag.id);
+      // Note: We're not removing from _selectedTagIds here,
+      // as that's more for categorization
+    });
+    debugPrint('Tag removed from note: ${tag.label}');
   }
 
   // Handler methods for bottom bar actions
@@ -173,7 +233,7 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
     debugPrint('Profile pressed');
   }
   
-  // Save the current note - now called directly from _handleExplorePressed
+  // Save the current note
   void _saveCurrentNote() {
     final content = _noteController.text;
     if (content.isEmpty) return;
@@ -195,12 +255,12 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
         ),
       );
       
-      // Clear the note input
+      // Clear the note input and reset state
       _noteController.clear();
       
-      // Reset selected tags
       setState(() {
         _selectedTagIds.clear();
+        _appliedTags.clear();
       });
     });
   }
@@ -224,9 +284,10 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
               _noteController.clear();
               Navigator.of(context).pop();
               
-              // Reset selected tags
+              // Reset selected tags and applied tags
               setState(() {
                 _selectedTagIds.clear();
+                _appliedTags.clear();
               });
             },
             child: const Text('DELETE'),
@@ -244,7 +305,6 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
     debugPrint('Undo pressed');
   }
   
-  // New handler for Format button
   void _handleFormatNote() {
     // This is a placeholder for future formatting functionality
     debugPrint('Format pressed - Feature to be implemented later');
@@ -256,11 +316,6 @@ class _NoteEntryScreenState extends State<NoteEntryScreen> {
         duration: Duration(seconds: 2),
       ),
     );
-    
-    // In a real implementation, this might:
-    // - Show a formatting toolbar
-    // - Display a dialog with formatting options
-    // - Toggle between different text styles
   }
   
   void _handleCameraPressed() {

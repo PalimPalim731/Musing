@@ -69,6 +69,19 @@ class TagService {
       return null; // Tag not found
     }
     
+    // Don't update if the label is the same
+    if (_tags[index].label == label) {
+      return _tags[index];
+    }
+    
+    // Ensure we're not creating a duplicate
+    if (_tags.any((t) => t.id != id && t.label.toLowerCase() == label.toLowerCase())) {
+      // In a real app, you'd want to handle this more gracefully,
+      // perhaps by showing a message to the user
+      debugPrint('Tag $label already exists. Using original name.');
+      return _tags[index];
+    }
+    
     final updatedTag = _tags[index].copyWith(label: label);
     _tags[index] = updatedTag;
     _notifyListeners();
